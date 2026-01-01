@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated to a warmer, more premium "paper" palette inspired by the first and fourth images */
+  /* Premium "paper" palette - warm, organic, editorial */
   --background: oklch(0.96 0.01 40);
   --foreground: oklch(0.15 0.02 40);
   --card: oklch(0.96 0.01 40);
@@ -12,7 +12,6 @@
   --popover: oklch(0.96 0.01 40);
   --popover-foreground: oklch(0.15 0.02 40);
   --primary: oklch(0.25 0.04 140);
-  /* Deep Forest Green for accents */
   --primary-foreground: oklch(0.96 0.01 40);
   --secondary: oklch(0.92 0.02 40);
   --secondary-foreground: oklch(0.15 0.02 40);
@@ -24,7 +23,6 @@
   --input: oklch(0.85 0.02 40);
   --ring: oklch(0.15 0.02 40);
   --radius: 0rem;
-  /* Sharp edges for editorial look */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -112,30 +110,88 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ===================================
+   BASE STYLES - Enhanced UX
+   =================================== */
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
 
   body {
     @apply bg-background text-foreground selection:bg-primary selection:text-primary-foreground tracking-tight;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Better default link styles */
+  a {
+    @apply transition-colors duration-300;
+    text-decoration: none;
+  }
+
+  /* Improved button resets */
+  button {
+    @apply transition-all duration-300;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Better image handling */
+  img {
+    @apply select-none;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 hover:bg-muted-foreground/50;
+    border-radius: 100px;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.4 0.02 40 / 0.3) oklch(0.92 0.02 40);
   }
 }
 
-/* Custom fade-in animation for an intentional feel */
+/* ===================================
+   CUSTOM ANIMATIONS
+   =================================== */
+
+/* Enhanced reveal animation with better timing */
 @keyframes reveal {
   from {
     opacity: 0;
     transform: translateY(30px) scale(0.98);
+    filter: blur(4px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+    filter: blur(0);
   }
 }
 
@@ -143,12 +199,86 @@
   animation: reveal 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-/* Custom easing for image transitions */
-.cubic-bezier {
-  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+/* Smooth reveal utility with intersection observer support */
+.smooth-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: blur(4px);
 }
 
-/* Added a grain texture for a more organic, paper-like feel */
+.smooth-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Fade in from bottom */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in from left */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale in */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Shimmer loading effect */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg,
+      transparent,
+      oklch(0.96 0.01 40 / 0.5),
+      transparent);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ===================================
+   VISUAL ENHANCEMENTS
+   =================================== */
+
+/* Enhanced grain texture - more subtle and refined */
 .grain::before {
   content: "";
   position: fixed;
@@ -158,29 +288,217 @@
   height: 100%;
   pointer-events: none;
   z-index: 100;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
 }
 
-/* Custom smooth scrolling utility */
-.smooth-reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.smooth-reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-
-/* Add a subtle vignette to the page for depth */
+/* Enhanced vignette for better depth */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
-  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.04);
   pointer-events: none;
   z-index: 99;
+  mix-blend-mode: multiply;
+}
+
+/* ===================================
+   UTILITY CLASSES
+   =================================== */
+
+/* Custom easing functions */
+.cubic-bezier {
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ease-smooth {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ease-bounce {
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Glass morphism utility */
+.glass {
+  background: oklch(0.96 0.01 40 / 0.8);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid oklch(0.85 0.02 40 / 0.5);
+}
+
+.glass-dark {
+  background: oklch(0.15 0.02 40 / 0.8);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid oklch(0.25 0.04 140 / 0.3);
+}
+
+/* Enhanced focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid oklch(0.15 0.02 40);
+  outline-offset: 3px;
+  transition: outline-offset 0.2s ease;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline-offset: 5px;
+}
+
+/* Disable focus outline for mouse users */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===================================
+   INTERACTIVE ELEMENTS
+   =================================== */
+
+/* Enhanced button hover states */
+button,
+.btn {
+  @apply overflow-hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+button:active,
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Magnetic hover effect utility */
+.magnetic {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.magnetic:hover {
+  transform: translateY(-2px);
+}
+
+/* ===================================
+   TEXT SELECTION ENHANCEMENTS
+   =================================== */
+
+::selection {
+  @apply bg-primary text-primary-foreground;
+  text-shadow: none;
+}
+
+::-moz-selection {
+  @apply bg-primary text-primary-foreground;
+  text-shadow: none;
+}
+
+/* ===================================
+   IMAGE OPTIMIZATION
+   =================================== */
+
+/* Image loading states removed - using Tailwind opacity classes instead */
+
+/* Prevent layout shift */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===================================
+   PERFORMANCE OPTIMIZATIONS
+   =================================== */
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .grain::before,
+  body::after {
+    display: none;
+  }
+}
+
+/* ===================================
+   RESPONSIVE UTILITIES
+   =================================== */
+
+/* Better mobile touch targets */
+@media (hover: none) and (pointer: coarse) {
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --foreground: oklch(0 0 0);
+    --background: oklch(1 0 0);
+    --border: oklch(0 0 0);
+  }
+
+  .grain::before,
+  body::after {
+    display: none;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  .dark body::after {
+    box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+
+@media print {
+
+  .grain::before,
+  body::after,
+  nav,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  img {
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
 }

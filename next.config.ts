@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    unoptimized: true, // Serve images at original quality without optimization
+    qualities: [100],
+  },
 };
 
 export default nextConfig;
