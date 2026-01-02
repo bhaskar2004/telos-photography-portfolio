@@ -4,7 +4,7 @@ import { Gallery } from "@/components/gallery"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
-import { Menu, X, Instagram, Linkedin, Mail } from "lucide-react"
+import { Menu, X, Instagram, ExternalLink, Mail } from "lucide-react"
 
 export default function GalleryPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -159,12 +159,14 @@ export default function GalleryPage() {
                       <span className="text-xs font-medium hidden sm:inline">Instagram</span>
                     </a>
                     <a
-                      href="#"
+                      href="https://bhaskar.xyz"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-2 p-3.5 hover:bg-black hover:text-white bg-gray-50 rounded-xl transition-all duration-300 group"
-                      aria-label="LinkedIn"
+                      aria-label="Portfolio"
                     >
-                      <Linkedin className="w-4 h-4" />
-                      <span className="text-xs font-medium hidden sm:inline">LinkedIn</span>
+                      <ExternalLink className="w-4 h-4" />
+                      <span className="text-xs font-medium hidden sm:inline">Portfolio</span>
                     </a>
                     <a
                       href="mailto:telos.photography@gmail.com"

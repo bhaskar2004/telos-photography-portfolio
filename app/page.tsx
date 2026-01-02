@@ -4,7 +4,7 @@ import { Gallery } from "@/components/gallery"
 import Link from "next/link"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
-import { Menu, X, ArrowRight, Instagram, Linkedin, Mail } from "lucide-react"
+import { Menu, X, ArrowRight, Instagram, ExternalLink, Mail } from "lucide-react"
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -171,12 +171,14 @@ export default function Home() {
                       <span className="text-xs font-medium hidden sm:inline">Instagram</span>
                     </a>
                     <a
-                      href="#"
+                      href="https://bhaskar.xyz"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-2 p-3.5 hover:bg-black hover:text-white bg-gray-50 rounded-xl transition-all duration-300 group"
-                      aria-label="LinkedIn"
+                      aria-label="Portfolio"
                     >
-                      <Linkedin className="w-4 h-4" />
-                      <span className="text-xs font-medium hidden sm:inline">LinkedIn</span>
+                      <ExternalLink className="w-4 h-4" />
+                      <span className="text-xs font-medium hidden sm:inline">Portfolio</span>
                     </a>
                     <a
                       href="mailto:telos.photography@gmail.com"
@@ -359,11 +361,13 @@ export default function Home() {
                   Instagram
                 </a>
                 <a
-                  href="#"
+                  href="https://bhaskar.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-gray-400 hover:text-white transition-colors"
                 >
-                  <Linkedin className="w-4 h-4" />
-                  Behance
+                  <ExternalLink className="w-4 h-4" />
+                  Portfolio
                 </a>
               </div>
             </div>
