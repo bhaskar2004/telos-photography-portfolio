@@ -26,6 +26,15 @@ export const metadata: Metadata = {
   keywords: ["photography", "portfolio", "storytelling", "minimal", "art"],
   authors: [{ name: "Telos Photography" }],
   creator: "Telos Photography",
+  icons: {
+    icon: [
+      { url: "/favicon.png", sizes: "any" },
+      { url: "/favicon.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/favicon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -61,10 +70,7 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-      </head>
+      <head />
       <body
         className="min-h-screen font-sans antialiased bg-white text-black selection:bg-black selection:text-white"
       >

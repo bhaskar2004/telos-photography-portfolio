@@ -112,13 +112,17 @@ export default function Home() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-              className="fixed top-0 right-0 z-50 w-[85%] max-w-sm h-screen bg-white md:hidden shadow-2xl"
+              className="fixed top-0 right-0 z-50 w-[90%] max-w-md h-screen bg-white md:hidden shadow-2xl flex flex-col"
             >
-              {/* Close button inside panel */}
-              <div className="flex justify-end p-6">
+              {/* Header with close button */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-100">
+                <div className="flex flex-col">
+                  <span className="font-serif text-xl tracking-tighter">Telos</span>
+                  <span className="text-[9px] tracking-[0.3em] uppercase text-gray-400 mt-0.5">Menu</span>
+                </div>
                 <button
                   onClick={() => setIsMenuOpen(false)}
-                  className="p-3 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-all duration-300 border border-gray-200"
+                  className="p-2.5 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all duration-300"
                   aria-label="Close menu"
                 >
                   <X className="w-5 h-5" />
@@ -126,7 +130,7 @@ export default function Home() {
               </div>
 
               {/* Navigation Links */}
-              <nav className="flex flex-col gap-2 px-6">
+              <nav className="flex flex-col gap-1 px-4 py-8 flex-1">
                 {navLinks.map((link, index) => (
                   <motion.div
                     key={link.href}
@@ -137,43 +141,52 @@ export default function Home() {
                     <Link
                       href={link.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className="block px-4 py-4 text-2xl font-serif tracking-tight hover:bg-gray-50 active:bg-gray-100 rounded-lg transition-all duration-300 border-b border-gray-100 last:border-0"
+                      className="group block px-5 py-5 text-3xl font-serif tracking-tight hover:bg-gray-50 active:bg-gray-100 rounded-xl transition-all duration-300 relative overflow-hidden"
                     >
-                      {link.label}
+                      <span className="relative z-10">{link.label}</span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </Link>
                   </motion.div>
                 ))}
               </nav>
 
-              {/* Social Links */}
+              {/* Social Links Footer */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
-                className="absolute bottom-8 left-6 right-6"
+                className="mt-auto border-t border-gray-100"
               >
-                <div className="flex gap-4 pt-6 border-t border-gray-200">
-                  <a
-                    href="#"
-                    className="p-3 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-all duration-300 border border-gray-200"
-                    aria-label="Instagram"
-                  >
-                    <Instagram className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="#"
-                    className="p-3 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-all duration-300 border border-gray-200"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="mailto:telos.photography@gmail.com"
-                    className="p-3 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-all duration-300 border border-gray-200"
-                    aria-label="Email"
-                  >
-                    <Mail className="w-5 h-5" />
-                  </a>
+                <div className="p-6">
+                  <p className="text-[10px] tracking-[0.3em] uppercase text-gray-400 mb-4">Connect</p>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href="https://www.instagram.com/telos_photography/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 p-3.5 hover:bg-black hover:text-white bg-gray-50 rounded-xl transition-all duration-300 group"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="w-4 h-4" />
+                      <span className="text-xs font-medium hidden sm:inline">Instagram</span>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex-1 flex items-center justify-center gap-2 p-3.5 hover:bg-black hover:text-white bg-gray-50 rounded-xl transition-all duration-300 group"
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin className="w-4 h-4" />
+                      <span className="text-xs font-medium hidden sm:inline">LinkedIn</span>
+                    </a>
+                    <a
+                      href="mailto:telos.photography@gmail.com"
+                      className="flex-1 flex items-center justify-center gap-2 p-3.5 hover:bg-black hover:text-white bg-gray-50 rounded-xl transition-all duration-300 group"
+                      aria-label="Email"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span className="text-xs font-medium hidden sm:inline">Email</span>
+                    </a>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
@@ -324,7 +337,7 @@ export default function Home() {
             <div className="space-y-6">
               <a
                 href="mailto:telos.photography@gmail.com"
-                className="group block font-serif text-3xl md:text-4xl lg:text-5xl tracking-tighter hover:italic transition-all"
+                className="group block font-serif text-2xl md:text-3xl lg:text-4xl tracking-tighter hover:italic transition-all"
               >
                 <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                   telos.photography
@@ -337,7 +350,9 @@ export default function Home() {
 
               <div className="flex gap-6 pt-6">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/telos_photography/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-gray-400 hover:text-white transition-colors"
                 >
                   <Instagram className="w-4 h-4" />
