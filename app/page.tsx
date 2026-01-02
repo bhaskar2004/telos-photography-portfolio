@@ -314,7 +314,7 @@ export default function Home() {
 
       {/* Gallery Section */}
       <div id="work">
-        <Gallery detailed />
+        <Gallery detailed limit={4} />
       </div>
 
       {/* Enhanced About Section */}

@@ -37,6 +37,16 @@ const photos = [
     height: 1350,
   },
   {
+    id: 4,
+    src: "/photo4.jpg",
+    title: "Moment IV",
+    category: "Photography",
+    span: "md:col-span-1",
+    description: "Evening captures in perfect light.",
+    width: 1080,
+    height: 1440,
+  },
+  {
     id: 5,
     src: "/photo5.jpg",
     title: "Moment V",
@@ -46,9 +56,49 @@ const photos = [
     width: 1080,
     height: 1620,
   },
+  {
+    id: 6,
+    src: "/photo6.jpg",
+    title: "Moment VI",
+    category: "Photography",
+    span: "md:col-span-2",
+    description: "Moments that tell silent stories.",
+    width: 1920,
+    height: 1080,
+  },
+  {
+    id: 7,
+    src: "/photo7.jpg",
+    title: "Moment VII",
+    category: "Photography",
+    span: "md:col-span-1",
+    description: "A fresh perspective on familiar scenes.",
+    width: 1080,
+    height: 1350,
+  },
+  {
+    id: 9,
+    src: "/photo9.jpg",
+    title: "Moment IX",
+    category: "Photography",
+    span: "md:col-span-1",
+    description: "Stories captured in stillness.",
+    width: 1080,
+    height: 1350,
+  },
+  {
+    id: 10,
+    src: "/photo10.jpg",
+    title: "Moment X",
+    category: "Photography",
+    span: "md:col-span-1",
+    description: "Beauty found in everyday moments.",
+    width: 1080,
+    height: 1440,
+  },
 ]
 
-export function Gallery({ detailed = false }: { detailed?: boolean }) {
+export function Gallery({ detailed = false, limit }: { detailed?: boolean; limit?: number }) {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null)
   const [filter, setFilter] = useState<string>("All")
 
@@ -57,6 +107,8 @@ export function Gallery({ detailed = false }: { detailed?: boolean }) {
   const filteredPhotos = filter === "All"
     ? photos
     : photos.filter(p => p.category === filter)
+
+  const displayedPhotos = limit ? filteredPhotos.slice(0, limit) : filteredPhotos
 
   const openLightbox = (index: number) => {
     setSelectedPhoto(index)
@@ -72,9 +124,9 @@ export function Gallery({ detailed = false }: { detailed?: boolean }) {
     if (selectedPhoto === null) return
 
     if (direction === 'prev') {
-      setSelectedPhoto(selectedPhoto === 0 ? filteredPhotos.length - 1 : selectedPhoto - 1)
+      setSelectedPhoto(selectedPhoto === 0 ? displayedPhotos.length - 1 : selectedPhoto - 1)
     } else {
-      setSelectedPhoto(selectedPhoto === filteredPhotos.length - 1 ? 0 : selectedPhoto + 1)
+      setSelectedPhoto(selectedPhoto === displayedPhotos.length - 1 ? 0 : selectedPhoto + 1)
     }
   }
 
@@ -123,7 +175,7 @@ export function Gallery({ detailed = false }: { detailed?: boolean }) {
           className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12"
         >
           <AnimatePresence mode="popLayout">
-            {filteredPhotos.map((photo, index) => (
+            {displayedPhotos.map((photo, index) => (
               <GalleryItem
                 key={photo.id}
                 photo={photo}
@@ -142,13 +194,13 @@ export function Gallery({ detailed = false }: { detailed?: boolean }) {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-16 md:mt-24 text-center text-gray-500 text-sm tracking-widest"
         >
-          {filteredPhotos.length} {filteredPhotos.length === 1 ? 'IMAGE' : 'IMAGES'}
+          {displayedPhotos.length} {displayedPhotos.length === 1 ? 'IMAGE' : 'IMAGES'}
         </motion.div>
       </section>
 
       {/* Lightbox */}
       <Lightbox
-        photos={filteredPhotos}
+        photos={displayedPhotos}
         selectedIndex={selectedPhoto}
         onClose={closeLightbox}
         onNavigate={navigatePhoto}
@@ -177,9 +229,14 @@ function GalleryItem({ photo, index, detailed, onClick }: { photo: any; index: n
       onClick={onClick}
     >
       <div className="relative overflow-hidden bg-gray-100">
+        {/* Loading skeleton */}
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+        )}
+
         <motion.div
           style={{ y }}
-          className="relative"
+          className="relative w-full"
         >
           <Image
             src={photo.src || "/placeholder.svg"}
@@ -189,12 +246,9 @@ function GalleryItem({ photo, index, detailed, onClick }: { photo: any; index: n
             quality={100}
             unoptimized={true}
             onLoad={() => setImageLoaded(true)}
-            className="w-full h-auto transition-all duration-[2s] group-hover:scale-105 opacity-100"
-            style={{
-              maxWidth: '100%',
-              height: 'auto',
-              objectFit: 'contain'
-            }}
+            loading="lazy"
+            className={`w-full h-auto transition-all duration-[2s] group-hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
           />
         </motion.div>
 
@@ -303,7 +357,7 @@ function Lightbox({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="relative max-w-[90vw] max-h-[90vh] flex flex-col items-center"
+            className="relative max-w-[80vw] max-h-[70vh] flex flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative">
@@ -314,7 +368,7 @@ function Lightbox({
                 height={selectedPhoto.height}
                 quality={100}
                 unoptimized={true}
-                className="max-w-full max-h-[80vh] w-auto h-auto object-contain"
+                className="max-w-full max-h-[75vh] w-auto h-auto object-contain"
               />
             </div>
 
