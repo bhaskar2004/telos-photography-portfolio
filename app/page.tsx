@@ -230,31 +230,18 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* Enhanced Hero Section with Parallax */}
+      {/* Enhanced Hero Section */}
       <section
         ref={heroRef}
         className="relative h-screen flex items-center justify-center overflow-hidden px-6"
         aria-labelledby="hero-title"
       >
-        {/* Background parallax layer */}
         <motion.div
-          style={{
-            y: useTransform(scrollYProgress, [0, 1], [0, -200]),
-            opacity: useTransform(scrollYProgress, [0, 0.5], [0.1, 0])
-          }}
-          className="absolute inset-0 bg-gradient-to-b from-gray-50 to-transparent pointer-events-none"
-        />
-
-        <motion.div
-          style={{ opacity, scale }}
+          style={{ opacity, scale, y }}
           className="relative z-10 text-center max-w-7xl w-full"
         >
-          {/* Title with enhanced parallax */}
-          <motion.h1
+          <h1
             id="hero-title"
-            style={{
-              y: useTransform(scrollYProgress, [0, 1], [0, -150])
-            }}
             className="font-serif text-[clamp(3rem,15vw,20rem)] md:text-[clamp(4rem,18vw,24rem)] uppercase leading-[0.8] tracking-[-0.04em] flex justify-center overflow-hidden"
           >
             {titleWords.map((char, i) => (
@@ -273,15 +260,11 @@ export default function Home() {
                 {char}
               </motion.span>
             ))}
-          </motion.h1>
+          </h1>
 
-          {/* Subtitle with medium parallax */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{
-              y: useTransform(scrollYProgress, [0, 1], [0, -100])
-            }}
             transition={{ duration: 1, delay: 0.8 }}
             className="mt-8 md:mt-12 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 lg:gap-24"
           >
@@ -294,13 +277,9 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* CTA button with light parallax */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{
-              y: useTransform(scrollYProgress, [0, 1], [0, -50])
-            }}
             transition={{ duration: 1, delay: 1.2 }}
             className="mt-12 md:mt-16"
           >
@@ -314,7 +293,6 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Scroll indicator - stays in place */}
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

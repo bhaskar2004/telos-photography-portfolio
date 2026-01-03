@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Playfair_Display, Outfit } from "next/font/google"
-import { PageTransition } from "@/components/page-transition"
 import "./globals.css"
 
 const playfair = Playfair_Display({
@@ -76,9 +75,7 @@ export default function RootLayout({
         className="min-h-screen font-sans antialiased bg-white text-black selection:bg-black selection:text-white"
       >
         <div className="relative flex min-h-screen flex-col">
-          <PageTransition>
-            <main className="flex-1">{children}</main>
-          </PageTransition>
+          <main className="flex-1">{children}</main>
         </div>
       </body>
     </html>

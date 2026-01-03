@@ -354,181 +354,29 @@ a:focus-visible {
 }
 
 /* ===================================
-   INTERACTIVE ELEMENTS & MICRO-INTERACTIONS
+   INTERACTIVE ELEMENTS
    =================================== */
 
-/* Enhanced button hover states with micro-interactions */
+/* Enhanced button hover states */
 button,
 .btn {
-  @apply overflow-hidden relative;
+  @apply overflow-hidden;
   transform: translateZ(0);
   backface-visibility: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Button ripple effect on hover */
-button::before,
-.btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, oklch(0.96 0.01 40 / 0.15) 0%, transparent 70%);
-  opacity: 0;
-  transform: scale(0);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-button:hover::before,
-.btn:hover::before {
-  opacity: 1;
-  transform: scale(1);
-}
-
-button:hover,
-.btn:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 24px oklch(0.15 0.02 40 / 0.12);
 }
 
 button:active,
 .btn:active {
-  transform: translateY(0) scale(0.98);
-  box-shadow: 0 2px 8px oklch(0.15 0.02 40 / 0.08);
-  transition: all 0.1s ease;
+  transform: scale(0.98);
 }
 
 /* Magnetic hover effect utility */
 .magnetic {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .magnetic:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px oklch(0.15 0.02 40 / 0.1);
-}
-
-.magnetic:active {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px oklch(0.15 0.02 40 / 0.06);
-}
-
-/* Enhanced link animations with smooth underline */
-a {
-  position: relative;
-  display: inline-block;
-  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Animated underline effect */
-a::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: currentColor;
-  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-a:hover::after {
-  width: 100%;
-}
-
-/* Alternative link style - fade from center */
-.link-center::after {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.link-center:hover::after {
-  width: 100%;
-}
-
-/* Link with background highlight */
-.link-highlight {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  padding: 2px 4px;
-  margin: 0 -4px;
-  border-radius: 2px;
-}
-
-.link-highlight:hover {
-  background: oklch(0.92 0.02 40);
-  color: oklch(0.15 0.02 40);
-}
-
-/* Image hover preview effects */
-.image-preview {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.image-preview::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg,
-      oklch(0.15 0.02 40 / 0) 0%,
-      oklch(0.15 0.02 40 / 0.3) 100%);
-  opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.image-preview:hover::before {
-  opacity: 1;
-}
-
-.image-preview img {
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.image-preview:hover img {
-  transform: scale(1.05);
-  filter: brightness(1.1) contrast(1.05);
-}
-
-/* Gallery image hover with overlay */
-.gallery-item {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.gallery-item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 50%,
-      transparent 0%,
-      oklch(0.15 0.02 40 / 0.4) 100%);
-  opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-}
-
-.gallery-item:hover::after {
-  opacity: 1;
-}
-
-.gallery-item:hover {
-  box-shadow: 0 20px 60px oklch(0.15 0.02 40 / 0.15);
-  transform: translateY(-4px) scale(1.02);
-}
-
-.gallery-item img {
-  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.gallery-item:hover img {
-  transform: scale(1.08);
+  transform: translateY(-2px);
 }
 
 /* ===================================
