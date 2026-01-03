@@ -266,11 +266,7 @@ function GalleryItem({ photo, index, detailed, onClick }: { photo: any; index: n
         delay: index * 0.05,
         ease: [0.16, 1, 0.3, 1]
       }}
-      whileHover={{
-        y: -6,
-        transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
-      }}
-      className="group cursor-pointer relative bg-card shadow-md hover:shadow-2xl transition-shadow duration-500 gpu-accelerated rounded-sm overflow-hidden"
+      className="gallery-item group relative bg-card shadow-md rounded-sm gpu-accelerated"
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
