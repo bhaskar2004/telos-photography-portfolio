@@ -12,7 +12,7 @@ const photos = [
     title: "Moment I",
     category: "Photography",
     span: "md:col-span-2",
-    description: "A captured moment that speaks to the calm within.",
+    description: "I ventured into misty hills shrouded in fog, overlooking lush green forests that whisper wilderness secrets.",
     width: 1920,
     height: 1080,
   },
@@ -22,7 +22,7 @@ const photos = [
     title: "Moment II",
     category: "Photography",
     span: "md:col-span-1",
-    description: "Finding beauty in everyday scenes.",
+    description: "I captured this vibrant blue sky pierced by sunlight, with power lines framing the glowing sun amid scattered clouds.",
     width: 1080,
     height: 1350,
   },
@@ -32,7 +32,7 @@ const photos = [
     title: "Moment III",
     category: "Photography",
     span: "md:col-span-1",
-    description: "A glimpse into the stories around us.",
+    description: "At sunset, I photographed a serene lake reflecting distant mountains bathed in golden light.",
     width: 1080,
     height: 1350,
   },
@@ -42,7 +42,7 @@ const photos = [
     title: "Moment IV",
     category: "Photography",
     span: "md:col-span-1",
-    description: "Evening captures in perfect light.",
+    description: "Through my lens, palm trees stand tall at dusk under brooding clouds, evoking tropical tension in monochrome.",
     width: 1080,
     height: 1440,
   },
@@ -52,7 +52,7 @@ const photos = [
     title: "Moment V",
     category: "Photography",
     span: "md:col-span-1",
-    description: "Through my lens, a different perspective.",
+    description: "My take on a backlit rose silhouette in black and white, petals glowing against a cloudy sky for dramatic elegance.",
     width: 1080,
     height: 1620,
   },
@@ -62,7 +62,7 @@ const photos = [
     title: "Moment VI",
     category: "Photography",
     span: "md:col-span-2",
-    description: "Moments that tell silent stories.",
+    description: "I silhouetted dark tree branches against a fading twilight sky in black and white, highlighting stark natural forms.",
     width: 1920,
     height: 1080,
   },
@@ -72,7 +72,7 @@ const photos = [
     title: "Moment VII",
     category: "Photography",
     span: "md:col-span-1",
-    description: "A fresh perspective on familiar scenes.",
+    description: "My shot of crystal-clear water gushing from a pipe into a village pond, surrounded by rice fields under a blue sky.",
     width: 1080,
     height: 1350,
   },
@@ -82,7 +82,7 @@ const photos = [
     title: "Moment IX",
     category: "Photography",
     span: "md:col-span-1",
-    description: "Stories captured in stillness.",
+    description: "I framed the intricate fronds of vibrant green ferns up close, celebrating nature's delicate patterns.",
     width: 1080,
     height: 1350,
   },
@@ -92,7 +92,7 @@ const photos = [
     title: "Moment X",
     category: "Photography",
     span: "md:col-span-1",
-    description: "Beauty found in everyday moments.",
+    description: "My close-up of dense evergreen foliage, revealing the lush depth of a conifer cluster.",
     width: 1080,
     height: 1440,
   },
@@ -132,47 +132,74 @@ export function Gallery({ detailed = false, limit }: { detailed?: boolean; limit
 
   return (
     <>
-      <section id="work" className="px-6 py-20 md:px-12 md:py-32">
+      <section id="work" className="grain px-4 sm:px-6 py-16 sm:py-20 md:px-12 md:py-32 relative">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-16 md:mb-24"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{
+            duration: 1.2,
+            ease: [0.16, 1, 0.3, 1]
+          }}
+          className="mb-12 sm:mb-16 md:mb-24"
         >
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tight mb-6">
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl tracking-tight mb-4 sm:mb-6 text-foreground">
             Photography Gallery
           </h1>
-          <p className="text-gray-600 text-lg md:text-xl max-w-2xl">
+          <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl leading-relaxed">
             A curated collection of moments captured through the lens
           </p>
         </motion.div>
 
-        {/* Filter Bar */}
+        {/* Filter Bar - Horizontal scroll on mobile */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-12 md:mb-16 flex flex-wrap gap-3"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{
+            duration: 1.2,
+            delay: 0.1,
+            ease: [0.16, 1, 0.3, 1]
+          }}
+          className="mb-10 sm:mb-12 md:mb-16"
         >
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`px-6 py-2 text-sm tracking-wider uppercase transition-all duration-300 ${filter === cat
-                ? 'bg-black text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-            >
-              {cat}
-            </button>
-          ))}
+          <div className="flex overflow-x-auto gap-2 sm:gap-3 pb-2 scrollbar-hide">
+            {categories.map((cat, idx) => (
+              <motion.button
+                key={cat}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.8,
+                  delay: idx * 0.05,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setFilter(cat)}
+                className={`magnetic px-5 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm tracking-[0.2em] uppercase transition-all duration-500 ease-out-expo whitespace-nowrap flex-shrink-0 ${filter === cat
+                  ? 'bg-primary text-primary-foreground shadow-lg'
+                  : 'bg-secondary text-secondary-foreground hover:bg-border hover:shadow-md'
+                  }`}
+              >
+                {cat}
+              </motion.button>
+            ))}
+          </div>
         </motion.div>
 
-        {/* Gallery Grid */}
+        {/* Gallery Grid with better spacing */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12"
+          transition={{
+            layout: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+          }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
         >
           <AnimatePresence mode="popLayout">
             {displayedPhotos.map((photo, index) => (
@@ -190,11 +217,16 @@ export function Gallery({ detailed = false, limit }: { detailed?: boolean; limit
         {/* Image Counter */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-16 md:mt-24 text-center text-gray-500 text-sm tracking-widest"
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 1.2,
+            delay: 0.3,
+            ease: [0.16, 1, 0.3, 1]
+          }}
+          className="mt-12 sm:mt-16 md:mt-24 text-center text-muted-foreground text-xs sm:text-sm tracking-[0.3em] uppercase"
         >
-          {displayedPhotos.length} {displayedPhotos.length === 1 ? 'IMAGE' : 'IMAGES'}
+          {displayedPhotos.length} {displayedPhotos.length === 1 ? 'Image' : 'Images'}
         </motion.div>
       </section>
 
@@ -212,26 +244,41 @@ export function Gallery({ detailed = false, limit }: { detailed?: boolean; limit
 function GalleryItem({ photo, index, detailed, onClick }: { photo: any; index: number; detailed?: boolean; onClick?: () => void }) {
   const ref = useRef(null)
   const [imageLoaded, setImageLoaded] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   })
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, -40])
+  const y = useTransform(scrollYProgress, [0, 1], [0, -50])
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 1 }}
-      animate={{ opacity: 1 }}
-      className={`group cursor-pointer relative ${photo.span}`}
+      layout
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: "-50px" }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{
+        duration: 1,
+        delay: index * 0.05,
+        ease: [0.16, 1, 0.3, 1]
+      }}
+      whileHover={{
+        y: -6,
+        transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
+      }}
+      className="group cursor-pointer relative bg-card shadow-md hover:shadow-2xl transition-shadow duration-500 gpu-accelerated rounded-sm overflow-hidden"
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative overflow-hidden bg-gray-100">
-        {/* Loading skeleton */}
+      <div className="relative overflow-hidden bg-muted/30">
+        {/* Loading skeleton with shimmer */}
         {!imageLoaded && (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+          <div className="absolute inset-0 bg-muted shimmer" />
         )}
 
         <motion.div
@@ -247,25 +294,83 @@ function GalleryItem({ photo, index, detailed, onClick }: { photo: any; index: n
             unoptimized={true}
             onLoad={() => setImageLoaded(true)}
             loading="lazy"
-            className={`w-full h-auto transition-all duration-[2s] group-hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'
+            className={`w-full h-auto transition-all duration-[1.2s] ease-out-expo group-hover:scale-[1.08] ${imageLoaded ? 'opacity-100' : 'opacity-0'
               }`}
           />
         </motion.div>
 
-        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
-          <ZoomIn className="w-12 h-12 text-white opacity-80" />
-        </div>
+        {/* Overlay with smooth gradient */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-center justify-center"
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{
+              scale: isHovered ? 1 : 0.8,
+              opacity: isHovered ? 1 : 0
+            }}
+            transition={{
+              duration: 0.4,
+              delay: 0.1,
+              ease: [0.34, 1.56, 0.64, 1]
+            }}
+          >
+            <div className="glass p-3 sm:p-4 rounded-full">
+              <ZoomIn className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
 
-      <div className="mt-8 flex justify-between items-baseline border-b border-gray-200 pb-4">
-        <div className="space-y-1">
-          <h3 className="font-serif text-3xl md:text-4xl tracking-tight leading-none">{photo.title}</h3>
-          <p className="text-[10px] tracking-[0.3em] uppercase text-gray-500">{photo.category}</p>
+      {/* Info section with premium styling */}
+      <div className="p-4 sm:p-6 md:p-8 bg-card">
+        <div className="flex justify-between items-baseline border-b border-border pb-3 sm:pb-4">
+          <div className="space-y-1 sm:space-y-2">
+            <motion.h3
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="font-serif text-xl sm:text-2xl md:text-3xl tracking-tight leading-none text-card-foreground"
+            >
+              {photo.title}
+            </motion.h3>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="text-[8px] sm:text-[9px] tracking-[0.3em] uppercase text-muted-foreground"
+            >
+              {photo.category}
+            </motion.p>
+          </div>
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-[10px] sm:text-[11px] font-serif italic text-muted-foreground/60"
+          >
+            0{index + 1}
+          </motion.span>
         </div>
-        <span className="text-[12px] font-serif italic text-gray-500">0{index + 1}</span>
-      </div>
 
-      {detailed && <p className="mt-4 text-sm leading-relaxed text-gray-600 max-w-sm">{photo.description}</p>}
+        {detailed && (
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-3 sm:mt-4 text-xs sm:text-sm leading-relaxed text-muted-foreground"
+          >
+            {photo.description}
+          </motion.p>
+        )}
+      </div>
     </motion.div>
   )
 }
@@ -282,6 +387,35 @@ function Lightbox({
   onNavigate: (direction: 'prev' | 'next') => void
 }) {
   const selectedPhoto = selectedIndex !== null ? photos[selectedIndex] : null
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe) {
+      onNavigate('next')
+    }
+    if (isRightSwipe) {
+      onNavigate('prev')
+    }
+  }
 
   // Keyboard navigation
   useEffect(() => {
@@ -306,89 +440,178 @@ function Lightbox({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center"
+          transition={{
+            duration: 0.5,
+            ease: [0.16, 1, 0.3, 1]
+          }}
+          className="fixed inset-0 z-50 bg-black/96 backdrop-blur-md flex items-center justify-center grain"
           onClick={onClose}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
         >
           {/* Close Button */}
           <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.8, rotate: 90 }}
+            transition={{
+              duration: 0.4,
+              delay: 0.2,
+              ease: [0.34, 1.56, 0.64, 1]
+            }}
+            whileHover={{
+              scale: 1.1,
+              rotate: 90,
+              transition: { duration: 0.3 }
+            }}
+            whileTap={{ scale: 0.95 }}
             onClick={onClose}
-            className="absolute top-6 right-6 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+            className="absolute top-4 sm:top-6 right-4 sm:right-6 z-50 p-3 sm:p-4 glass-dark rounded-full transition-all duration-300 hover:shadow-xl magnetic"
           >
-            <X className="w-6 h-6 text-white" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </motion.button>
 
-          {/* Navigation Buttons */}
+          {/* Navigation Buttons - Hidden on mobile */}
           <motion.button
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ delay: 0.2 }}
+            exit={{ opacity: 0, x: -30 }}
+            transition={{
+              duration: 0.4,
+              delay: 0.2,
+              ease: [0.16, 1, 0.3, 1]
+            }}
+            whileHover={{
+              scale: 1.1,
+              x: -5,
+              transition: { duration: 0.2 }
+            }}
+            whileTap={{ scale: 0.95 }}
             onClick={(e) => {
               e.stopPropagation()
               onNavigate('prev')
             }}
-            className="absolute left-6 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+            className="hidden sm:flex absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-50 p-3 sm:p-4 glass-dark rounded-full transition-all duration-300 hover:shadow-xl magnetic"
           >
-            <ChevronLeft className="w-6 h-6 text-white" />
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </motion.button>
 
           <motion.button
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ delay: 0.2 }}
+            exit={{ opacity: 0, x: 30 }}
+            transition={{
+              duration: 0.4,
+              delay: 0.2,
+              ease: [0.16, 1, 0.3, 1]
+            }}
+            whileHover={{
+              scale: 1.1,
+              x: 5,
+              transition: { duration: 0.2 }
+            }}
+            whileTap={{ scale: 0.95 }}
             onClick={(e) => {
               e.stopPropagation()
               onNavigate('next')
             }}
-            className="absolute right-6 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+            className="hidden sm:flex absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-50 p-3 sm:p-4 glass-dark rounded-full transition-all duration-300 hover:shadow-xl magnetic"
           >
-            <ChevronRight className="w-6 h-6 text-white" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </motion.button>
 
           {/* Image Container */}
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="relative max-w-[80vw] max-h-[70vh] flex flex-col items-center"
+            key={selectedIndex}
+            initial={{ scale: 0.85, opacity: 0, y: 40 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.85, opacity: 0, y: 40 }}
+            transition={{
+              duration: 0.6,
+              ease: [0.16, 1, 0.3, 1]
+            }}
+            className="relative w-full max-w-[90vw] sm:max-w-[85vw] max-h-[85vh] sm:max-h-[75vh] flex flex-col items-center justify-center px-4 sm:px-0 gpu-accelerated"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative">
-              <Image
-                src={selectedPhoto.src}
-                alt={selectedPhoto.title}
-                width={selectedPhoto.width}
-                height={selectedPhoto.height}
-                quality={100}
-                unoptimized={true}
-                className="max-w-full max-h-[75vh] w-auto h-auto object-contain"
-              />
-            </div>
+            <motion.div
+              className="relative w-full flex items-center justify-center"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="relative overflow-hidden rounded-sm shadow-2xl w-full">
+                <Image
+                  src={selectedPhoto.src}
+                  alt={selectedPhoto.title}
+                  width={selectedPhoto.width}
+                  height={selectedPhoto.height}
+                  quality={100}
+                  unoptimized={true}
+                  className="max-w-full max-h-[55vh] sm:max-h-[70vh] w-auto h-auto object-contain mx-auto"
+                />
+              </div>
+            </motion.div>
 
             {/* Image Info */}
             <motion.div
-              initial={{ y: 20, opacity: 0 }}
+              initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mt-6 text-center space-y-2"
+              transition={{
+                duration: 0.8,
+                delay: 0.3,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              className="mt-6 sm:mt-8 text-center space-y-2 sm:space-y-3 max-w-3xl px-4"
             >
-              <h2 className="text-white font-serif text-3xl">{selectedPhoto.title}</h2>
-              <p className="text-gray-400 text-sm tracking-wider uppercase">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="text-white font-serif text-2xl sm:text-3xl md:text-4xl tracking-tight"
+              >
+                {selectedPhoto.title}
+              </motion.h2>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="text-gray-400 text-xs sm:text-sm tracking-[0.2em] uppercase"
+              >
                 {selectedPhoto.category} • {selectedPhoto.width} × {selectedPhoto.height}
-              </p>
-              <p className="text-gray-300 text-sm max-w-2xl mx-auto mt-3">
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto pt-2"
+              >
                 {selectedPhoto.description}
-              </p>
-              <p className="text-gray-500 text-xs mt-4">
-                {selectedIndex + 1} / {photos.length}
-              </p>
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="pt-3 sm:pt-4 flex items-center justify-center gap-2"
+              >
+                <div className="h-px w-8 sm:w-12 bg-gray-600"></div>
+                <p className="text-gray-500 text-xs tracking-wider">
+                  {selectedIndex + 1} / {photos.length}
+                </p>
+                <div className="h-px w-8 sm:w-12 bg-gray-600"></div>
+              </motion.div>
+            </motion.div>
+
+            {/* Mobile swipe indicator */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1 }}
+              className="sm:hidden mt-4 text-gray-500 text-xs tracking-wider"
+            >
+              Swipe to navigate
             </motion.div>
           </motion.div>
         </motion.div>

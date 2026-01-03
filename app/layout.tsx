@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Playfair_Display, Inter } from "next/font/google"
+import { Playfair_Display, Outfit } from "next/font/google"
 import "./globals.css"
 
 const playfair = Playfair_Display({
@@ -10,7 +10,7 @@ const playfair = Playfair_Display({
   preload: true,
 })
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
@@ -67,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable}`}
+      className={`${playfair.variable} ${outfit.variable}`}
       suppressHydrationWarning
     >
       <head />
