@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: '/private/',
         },
-        sitemap: 'https://telos.bhaskar.xyz/sitemap.xml',
+        sitemap: 'https://fresnel.bhaskar.xyz/sitemap.xml',
     }
 }

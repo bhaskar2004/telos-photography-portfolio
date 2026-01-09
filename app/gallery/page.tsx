@@ -38,7 +38,7 @@ export default function GalleryPage() {
       >
         <Link href="/" className="flex flex-col group">
           <span className="font-serif text-2xl md:text-3xl tracking-tighter leading-none group-hover:italic transition-all">
-            Telos
+            Fresnel
           </span>
           <span className="text-[9px] tracking-[0.4em] uppercase text-gray-500 mt-1">
             Archival Portfolio
@@ -105,7 +105,7 @@ export default function GalleryPage() {
               {/* Header with close button */}
               <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <div className="flex flex-col">
-                  <span className="font-serif text-xl tracking-tighter">Telos</span>
+                  <span className="font-serif text-xl tracking-tighter">Fresnel</span>
                   <span className="text-[9px] tracking-[0.3em] uppercase text-gray-400 mt-0.5">Menu</span>
                 </div>
                 <button
@@ -149,7 +149,7 @@ export default function GalleryPage() {
                   <p className="text-[10px] tracking-[0.3em] uppercase text-gray-400 mb-4">Connect</p>
                   <div className="flex items-center gap-3">
                     <a
-                      href="https://www.instagram.com/telos_photography/"
+                      href="https://www.instagram.com/fresnel_photography/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-2 p-3.5 hover:bg-black hover:text-white bg-gray-50 rounded-xl transition-all duration-300 group"
@@ -169,7 +169,7 @@ export default function GalleryPage() {
                       <span className="text-xs font-medium hidden sm:inline">Portfolio</span>
                     </a>
                     <a
-                      href="mailto:telos.photography@gmail.com"
+                      href="mailto:photography.fresnel@gmail.com"
                       className="flex-1 flex items-center justify-center gap-2 p-3.5 hover:bg-black hover:text-white bg-gray-50 rounded-xl transition-all duration-300 group"
                       aria-label="Email"
                     >
@@ -194,7 +194,7 @@ export default function GalleryPage() {
       <Gallery detailed />
 
       <footer className="px-6 py-24 md:px-12 border-t border-gray-200 flex justify-between items-end">
-        <span className="font-serif text-xl tracking-tighter">Telos</span>
+        <span className="font-serif text-xl tracking-tighter">Fresnel</span>
         <span className="text-[9px] tracking-[0.2em] uppercase text-gray-500">© {new Date().getFullYear()}</span>
       </footer>
     </main>

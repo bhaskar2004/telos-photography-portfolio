@@ -18,19 +18,19 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://telos.bhaskar.xyz'),
+  metadataBase: new URL('https://fresnel.bhaskar.xyz'),
   alternates: {
     canonical: '/',
   },
   title: {
-    default: "Telos — Photography with Purpose",
-    template: "%s | Telos Photography",
+    default: "Fresnel — Photography with Purpose",
+    template: "%s | Fresnel Photography",
   },
   description: "Minimal photography portfolio focused on intentional storytelling. Based in Bengaluru, India.",
-  keywords: ["Telos", "Telos Photography", "Telos Portfolio", "Telos India", "photography", "portfolio", "storytelling", "minimal", "art", "Bengaluru", "India", "photographer"],
-  authors: [{ name: "Telos Photography" }],
-  creator: "Telos Photography",
-  publisher: "Telos Photography",
+  keywords: ["Fresnel", "Fresnel Photography", "Fresnel Portfolio", "Fresnel India", "photography", "portfolio", "storytelling", "minimal", "art", "Bengaluru", "India", "photographer"],
+  authors: [{ name: "Fresnel Photography" }],
+  creator: "Fresnel Photography",
+  publisher: "Fresnel Photography",
   icons: {
     icon: [
       { url: "/favicon.png", sizes: "any" },
@@ -43,22 +43,22 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: 'https://telos.bhaskar.xyz',
-    siteName: "Telos Photography",
-    title: "Telos — Photography with Purpose",
+    url: 'https://fresnel.bhaskar.xyz',
+    siteName: "Fresnel Photography",
+    title: "Fresnel — Photography with Purpose",
     description: "Minimal photography portfolio focused on intentional storytelling. Capturing the intentionality of existence through a minimal lens.",
     images: [
       {
         url: '/og-image.jpg', // Ensure this image exists in public folder or update path
         width: 1200,
         height: 630,
-        alt: 'Telos Photography Portfolio',
+        alt: 'Fresnel Photography Portfolio',
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Telos — Photography with Purpose",
+    title: "Fresnel — Photography with Purpose",
     description: "Minimal photography portfolio focused on intentional storytelling.",
     images: ['/og-image.jpg'], // Consistency with OG
   },
@@ -84,10 +84,10 @@ export const viewport: Viewport = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: 'Telos Photography',
-  url: 'https://telos.bhaskar.xyz',
+  name: 'Fresnel Photography',
+  url: 'https://fresnel.bhaskar.xyz',
   sameAs: [
-    'https://www.instagram.com/telos_photography/',
+    'https://www.instagram.com/fresnel_photography/',
     'https://bhaskar.xyz'
   ],
   jobTitle: 'Photographer',

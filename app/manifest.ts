@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        name: 'Telos Photography',
-        short_name: 'Telos',
+        name: 'Fresnel Photography',
+        short_name: 'Fresnel',
         description: 'Minimal photography portfolio focused on intentional storytelling.',
         start_url: '/',
         display: 'standalone',

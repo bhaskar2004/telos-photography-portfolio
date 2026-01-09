@@ -50,7 +50,7 @@ export default function Home() {
     }
   }, [isMenuOpen])
 
-  const titleWords = ["T", "e", "l", "o", "s"]
+  const titleWords = ["F", "r", "e", "s", "n", "e", "l"]
 
   const navLinks = [
     { href: "/gallery", label: "Gallery" },
@@ -59,9 +59,9 @@ export default function Home() {
   ]
 
   const socialLinks = [
-    { href: "https://www.instagram.com/telos_photography/", icon: Instagram, label: "Instagram" },
+    { href: "https://www.instagram.com/fresnel_photography/", icon: Instagram, label: "Instagram" },
     { href: "https://bhaskar.xyz", icon: ExternalLink, label: "Portfolio" },
-    { href: "mailto:telos.photography@gmail.com", icon: Mail, label: "Email" },
+    { href: "mailto:photography.fresnel@gmail.com", icon: Mail, label: "Email" },
   ]
 
   const scrollToSection = (id: string) => {
@@ -95,10 +95,10 @@ export default function Home() {
         <Link
           href="/"
           className="flex flex-col group focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded-sm"
-          aria-label="Telos - Homepage"
+          aria-label="Fresnel - Homepage"
         >
           <span className="font-serif text-2xl md:text-3xl tracking-tighter leading-none group-hover:italic transition-all">
-            Telos
+            Fresnel
           </span>
           <span className="text-[9px] tracking-[0.4em] uppercase text-gray-500 mt-1">
             Archival Portfolio
@@ -168,7 +168,7 @@ export default function Home() {
             >
               <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <div className="flex flex-col">
-                  <span className="font-serif text-xl tracking-tighter">Telos</span>
+                  <span className="font-serif text-xl tracking-tighter">Fresnel</span>
                   <span className="text-[9px] tracking-[0.3em] uppercase text-gray-400 mt-0.5">Menu</span>
                 </div>
                 <button
@@ -243,7 +243,7 @@ export default function Home() {
           <h1
             id="hero-title"
             className="font-serif text-[clamp(3rem,15vw,20rem)] md:text-[clamp(4rem,18vw,24rem)] uppercase leading-[0.8] tracking-[-0.04em] flex justify-center overflow-hidden"
-            aria-label="Telos"
+            aria-label="Fresnel"
           >
             {titleWords.map((char, i) => (
               <motion.span
@@ -392,11 +392,11 @@ export default function Home() {
             </span>
             <div className="space-y-6">
               <a
-                href="mailto:telos.photography@gmail.com"
+                href="mailto:photography.fresnel@gmail.com"
                 className="group block font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl tracking-tighter hover:italic transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black rounded"
               >
                 <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                  telos.photography
+                  photography.fresnel
                 </span>
                 <br />
                 <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
@@ -406,7 +406,7 @@ export default function Home() {
 
               <div className="flex gap-4 md:gap-6 pt-6" role="list" aria-label="Social media links">
                 <a
-                  href="https://www.instagram.com/telos_photography/"
+                  href="https://www.instagram.com/fresnel_photography/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-gray-400 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded px-1"
@@ -446,7 +446,7 @@ export default function Home() {
             </div>
 
             <div className="mt-16 md:mt-0 pt-12 border-t border-gray-800 flex flex-col md:items-end gap-3">
-              <span className="font-serif text-2xl tracking-tighter">Telos</span>
+              <span className="font-serif text-2xl tracking-tighter">Fresnel</span>
               <span className="text-[9px] tracking-[0.2em] uppercase text-gray-500">
                 © {new Date().getFullYear()} All Rights Reserved
               </span>
