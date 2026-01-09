@@ -59,7 +59,7 @@ export default function Home() {
   ]
 
   const socialLinks = [
-    { href: "https://www.instagram.com/fresnel_photography/", icon: Instagram, label: "Instagram" },
+    { href: "https://www.instagram.com/fresnelphotography/", icon: Instagram, label: "Instagram" },
     { href: "https://bhaskar.xyz", icon: ExternalLink, label: "Portfolio" },
     { href: "mailto:photography.fresnel@gmail.com", icon: Mail, label: "Email" },
   ]
@@ -406,7 +406,7 @@ export default function Home() {
 
               <div className="flex gap-4 md:gap-6 pt-6" role="list" aria-label="Social media links">
                 <a
-                  href="https://www.instagram.com/fresnel_photography/"
+                  href="https://www.instagram.com/fresnelphotography/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-gray-400 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded px-1"

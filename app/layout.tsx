@@ -87,7 +87,7 @@ const jsonLd = {
   name: 'Fresnel Photography',
   url: 'https://fresnel.bhaskar.xyz',
   sameAs: [
-    'https://www.instagram.com/fresnel_photography/',
+    'https://www.instagram.com/fresnelphotography/',
     'https://bhaskar.xyz'
   ],
   jobTitle: 'Photographer',

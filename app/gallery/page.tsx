@@ -149,7 +149,7 @@ export default function GalleryPage() {
                   <p className="text-[10px] tracking-[0.3em] uppercase text-gray-400 mb-4">Connect</p>
                   <div className="flex items-center gap-3">
                     <a
-                      href="https://www.instagram.com/fresnel_photography/"
+                      href="https://www.instagram.com/fresnelphotography/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-2 p-3.5 hover:bg-black hover:text-white bg-gray-50 rounded-xl transition-all duration-300 group"
