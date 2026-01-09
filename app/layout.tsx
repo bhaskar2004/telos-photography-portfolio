@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s | Telos Photography",
   },
   description: "Minimal photography portfolio focused on intentional storytelling. Based in Bengaluru, India.",
-  keywords: ["photography", "portfolio", "storytelling", "minimal", "art", "Bengaluru", "India", "photographer"],
+  keywords: ["Telos", "Telos Photography", "Telos Portfolio", "Telos India", "photography", "portfolio", "storytelling", "minimal", "art", "Bengaluru", "India", "photographer"],
   authors: [{ name: "Telos Photography" }],
   creator: "Telos Photography",
   publisher: "Telos Photography",
