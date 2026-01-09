@@ -243,6 +243,7 @@ export default function Home() {
           <h1
             id="hero-title"
             className="font-serif text-[clamp(3rem,15vw,20rem)] md:text-[clamp(4rem,18vw,24rem)] uppercase leading-[0.8] tracking-[-0.04em] flex justify-center overflow-hidden"
+            aria-label="Telos"
           >
             {titleWords.map((char, i) => (
               <motion.span
@@ -255,7 +256,7 @@ export default function Home() {
                   delay: 0.1 * i,
                 }}
                 className="inline-block hover:text-gray-600 transition-colors"
-                aria-hidden={i > 0}
+                aria-hidden="true"
               >
                 {char}
               </motion.span>
