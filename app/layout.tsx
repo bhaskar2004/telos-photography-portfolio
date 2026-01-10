@@ -1,19 +1,21 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Playfair_Display, Outfit } from "next/font/google"
+import { Cormorant_Garamond, Lato } from "next/font/google"
 import "./globals.css"
 
-const playfair = Playfair_Display({
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
   preload: true,
 })
 
-const outfit = Outfit({
+const lato = Lato({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+  weight: ["300", "400", "700"],
   preload: true,
 })
 
@@ -108,7 +110,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${outfit.variable}`}
+      className={`${cormorantGaramond.variable} ${lato.variable}`}
       suppressHydrationWarning
     >
       <head />
