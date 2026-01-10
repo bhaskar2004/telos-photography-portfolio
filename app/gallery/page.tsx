@@ -25,7 +25,7 @@ export default function GalleryPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen">
       {/* Enhanced Navigation */}
       <motion.nav
         initial={{ y: -100 }}

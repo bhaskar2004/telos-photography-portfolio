@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Cormorant_Garamond, Lato } from "next/font/google"
 import SmoothScroll from "@/components/smooth-scroll"
+import Particles from "@/components/particles"
 import "./globals.css"
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -119,6 +120,7 @@ export default function RootLayout({
         className="min-h-screen font-sans antialiased bg-white text-black selection:bg-black selection:text-white"
       >
         <SmoothScroll>
+          <Particles />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
