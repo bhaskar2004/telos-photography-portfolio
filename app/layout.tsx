@@ -37,11 +37,11 @@ export const metadata: Metadata = {
   publisher: "Fresnel Photography",
   icons: {
     icon: [
-      { url: "/2.png", sizes: "any" },
-      { url: "/2.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.png", sizes: "any" },
+      { url: "/favicon.png", sizes: "32x32", type: "image/png" },
     ],
     apple: [
-      { url: "/2.png", sizes: "180x180", type: "image/png" },
+      { url: "/favicon.png", sizes: "180x180", type: "image/png" },
     ],
   },
   openGraph: {
