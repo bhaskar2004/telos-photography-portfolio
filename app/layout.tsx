@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Cormorant_Garamond, Lato } from "next/font/google"
+import SmoothScroll from "@/components/smooth-scroll"
 import "./globals.css"
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -117,13 +118,15 @@ export default function RootLayout({
       <body
         className="min-h-screen font-sans antialiased bg-white text-black selection:bg-black selection:text-white"
       >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <div className="relative flex min-h-screen flex-col">
-          <main className="flex-1">{children}</main>
-        </div>
+        <SmoothScroll>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+          <div className="relative flex min-h-screen flex-col">
+            <main className="flex-1">{children}</main>
+          </div>
+        </SmoothScroll>
       </body>
     </html>
   )
