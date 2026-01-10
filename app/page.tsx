@@ -314,18 +314,7 @@ export default function Home() {
       </section>
 
       {/* Gallery Section */}
-      <div id="work">
-        <Gallery detailed limit={4} />
-        <div className="flex justify-center mt-12 md:mt-16 pb-12">
-          <Link
-            href="/gallery"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-black text-white text-xs tracking-widest uppercase hover:bg-gray-900 transition-all hover:gap-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4"
-          >
-            View Full Gallery
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-          </Link>
-        </div>
-      </div>
+      <Gallery detailed limit={4} />
 
       {/* Enhanced About Section */}
       <section
