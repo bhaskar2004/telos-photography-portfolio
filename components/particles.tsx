@@ -135,7 +135,7 @@ export default function Particles() {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 z-0 pointer-events-none"
+            className="fixed inset-0 z-0 pointer-events-none hidden md:block"
         />
     )
 }
