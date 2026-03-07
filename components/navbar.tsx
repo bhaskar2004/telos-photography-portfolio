@@ -126,7 +126,7 @@ export default function Navbar() {
                         ))}
 
                         <button
-                            onClick={() => link.href.startsWith('/#') ? scrollToSection(link.href.replace('/', '')) : (window.location.href = '#contact')}
+                            onClick={() => scrollToSection('#contact')}
                             className="bg-foreground text-background text-[9px] tracking-[0.3em] uppercase font-bold px-5 py-2 rounded-full hover:scale-105 transition-transform active:scale-95"
                         >
                             Contact

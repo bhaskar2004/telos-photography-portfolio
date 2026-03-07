@@ -1,0 +1,24 @@
+
+> fresnel-portfolio@0.1.0 build
+> next build
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+   ▲ Next.js 16.0.10 (Turbopack)
+
+   Creating an optimized production build ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ ✓ Compiled successfully in 3.6s
+   Running TypeScript ...
+Failed to compile.
+
+./components/navbar.tsx:129:44
+Type error: Cannot find name 'link'. Did you mean 'Link'?
+
+[0m [90m 127 |[39m
+ [90m 128 |[39m                         [33m<[39m[33mbutton[39m
+[31m[1m>[22m[39m[90m 129 |[39m                             onClick[33m=[39m{() [33m=>[39m link[33m.[39mhref[33m.[39mstartsWith([32m'/#'[39m) [33m?[39m scrollToSection(link[33m.[39mhref[33m.[39mreplace([32m'/'[39m[33m,[39m [32m''[39m)) [33m:[39m (window[33m.[39mlocation[33m.[39mhref [33m=[39m [32m'#contact'[39m)}
+ [90m     |[39m                                            [31m[1m^[22m[39m
+ [90m 130 |[39m                             className[33m=[39m[32m"bg-foreground text-background text-[9px] tracking-[0.3em] uppercase font-bold px-5 py-2 rounded-full hover:scale-105 transition-transform active:scale-95"[39m
+ [90m 131 |[39m                         [33m>[39m
+ [90m 132 |[39m                             [33mContact[39m[0m
+Next.js build worker exited with code: 1 and signal: null
