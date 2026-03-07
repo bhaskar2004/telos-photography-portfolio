@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
         description: 'Minimal photography portfolio focused on intentional storytelling.',
         start_url: '/',
         display: 'standalone',
-        background_color: '#ffffff',
-        theme_color: '#000000',
+        background_color: '#f5f6f4',
+        theme_color: '#23252a',
         icons: [
             {
                 src: '/favicon.ico',

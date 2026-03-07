@@ -1,13 +1,14 @@
 "use client"
 
+import Navbar from "@/components/navbar"
 import { Gallery } from "@/components/gallery"
 import Link from "next/link"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useRef, useState, useEffect, useCallback } from "react"
-import { Menu, X, ArrowRight, Instagram, ExternalLink, Mail, ChevronDown } from "lucide-react"
+import { Menu, X, ArrowRight, Instagram, ChevronDown, Mail, ExternalLink } from "lucide-react"
+import Reveal from "@/components/reveal"
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const heroRef = useRef(null)
 
@@ -29,40 +30,7 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [handleScroll])
 
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isMenuOpen) {
-        setIsMenuOpen(false)
-      }
-    }
-    document.addEventListener('keydown', handleEscape)
-    return () => document.removeEventListener('keydown', handleEscape)
-  }, [isMenuOpen])
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [isMenuOpen])
-
   const titleWords = ["F", "r", "e", "s", "n", "e", "l"]
-
-  const navLinks = [
-    { href: "/gallery", label: "Gallery" },
-    { href: "#about", label: "About" },
-    { href: "#contact", label: "Contact" },
-  ]
-
-  const socialLinks = [
-    { href: "https://www.instagram.com/fresnelphotography/", icon: Instagram, label: "Instagram" },
-    { href: "https://bhaskar.xyz", icon: ExternalLink, label: "Portfolio" },
-    { href: "mailto:photography.fresnel@gmail.com", icon: Mail, label: "Email" },
-  ]
 
   const scrollToSection = (id: string) => {
     const element = document.querySelector(id)
@@ -75,303 +43,276 @@ export default function Home() {
     <main className="min-h-screen">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-black focus:text-white focus:rounded"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:rounded"
       >
         Skip to main content
       </a>
 
-      {/* Enhanced Navigation */}
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
-        className={`fixed top-0 left-0 z-50 flex w-full items-center justify-between px-6 py-4 md:py-6 md:px-12 transition-all duration-500 ${isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-sm'
-          : 'bg-transparent'
-          }`}
-        role="navigation"
-        aria-label="Main navigation"
-      >
-        <Link
-          href="/"
-          className="flex flex-col group focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded-sm"
-          aria-label="Fresnel - Homepage"
-        >
-          <span className="font-serif text-2xl md:text-3xl tracking-tighter leading-none group-hover:italic transition-all">
-            Fresnel
-          </span>
-          <span className="text-[9px] tracking-[0.4em] uppercase text-gray-500 mt-1">
-            Archival Portfolio
-          </span>
-        </Link>
+      <Navbar />
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8 lg:gap-12 text-[10px] tracking-[0.3em] uppercase font-medium">
-          {navLinks.map((link, index) => (
-            <motion.div
-              key={link.href}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * index, duration: 0.5 }}
-            >
-              <Link
-                href={link.href}
-                className="hover:text-gray-900 text-gray-600 transition-colors relative group focus:outline-none focus-visible:text-black"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black transition-all duration-300 group-hover:w-full group-focus-visible:w-full" />
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden p-2 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-all duration-300 border border-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMenuOpen}
-          aria-controls="mobile-menu"
-        >
-          {isMenuOpen ? (
-            <X className="w-5 h-5" aria-hidden="true" />
-          ) : (
-            <Menu className="w-5 h-5" aria-hidden="true" />
-          )}
-        </button>
-      </motion.nav>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm md:hidden"
-              onClick={() => setIsMenuOpen(false)}
-              aria-hidden="true"
-            />
-
-            <motion.div
-              id="mobile-menu"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-              className="fixed top-0 right-0 z-50 w-[90%] max-w-md h-screen bg-white md:hidden shadow-2xl flex flex-col overflow-y-auto"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Mobile navigation menu"
-            >
-              <div className="flex items-center justify-between p-6 border-b border-gray-100">
-                <div className="flex flex-col">
-                  <span className="font-serif text-xl tracking-tighter">Fresnel</span>
-                  <span className="text-[9px] tracking-[0.3em] uppercase text-gray-400 mt-0.5">Menu</span>
-                </div>
-                <button
-                  onClick={() => setIsMenuOpen(false)}
-                  className="p-2.5 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
-                  aria-label="Close menu"
-                >
-                  <X className="w-5 h-5" aria-hidden="true" />
-                </button>
-              </div>
-
-              <nav className="flex flex-col gap-1 px-4 py-8 flex-1" aria-label="Mobile navigation links">
-                {navLinks.map((link, index) => (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + index * 0.05, duration: 0.4 }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="group block px-5 py-5 text-3xl font-serif tracking-tight hover:bg-gray-50 active:bg-gray-100 rounded-xl transition-all duration-300 relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-black"
-                    >
-                      <span className="relative z-10">{link.label}</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </Link>
-                  </motion.div>
-                ))}
-              </nav>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-                className="mt-auto border-t border-gray-100"
-              >
-                <div className="p-6">
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-gray-400 mb-4">Connect</p>
-                  <div className="flex items-center gap-3">
-                    {socialLinks.map((social) => (
-                      <a
-                        key={social.label}
-                        href={social.href}
-                        target={social.href.startsWith('http') ? "_blank" : undefined}
-                        rel={social.href.startsWith('http') ? "noopener noreferrer" : undefined}
-                        className="flex-1 flex items-center justify-center gap-2 p-3.5 hover:bg-black hover:text-white bg-gray-50 rounded-xl transition-all duration-300 group focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
-                        aria-label={social.label}
-                      >
-                        <social.icon className="w-4 h-4" aria-hidden="true" />
-                        <span className="text-xs font-medium hidden sm:inline">{social.label}</span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* Enhanced Hero Section */}
+      {/* Enhanced Viewfinder Hero Section */}
       <section
         ref={heroRef}
-        className="relative h-screen flex items-center justify-center overflow-hidden px-6"
+        className="relative h-screen flex items-center justify-center overflow-hidden px-6 bg-background"
         aria-labelledby="hero-title"
       >
+        {/* Flash Effect Overlay */}
+        <motion.div
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="absolute inset-0 bg-foreground z-[60] pointer-events-none"
+        />
+
+        {/* Viewfinder Framing Elements */}
+        <div className="absolute inset-4 sm:inset-8 md:inset-12 lg:inset-20 border-[0.5px] border-foreground/5 pointer-events-none z-20">
+          <div className="absolute top-0 left-0 w-4 h-4 sm:w-8 sm:h-8 border-t border-l border-foreground/30" />
+          <div className="absolute top-0 right-0 w-4 h-4 sm:w-8 sm:h-8 border-t border-r border-foreground/30" />
+          <div className="absolute bottom-0 left-0 w-4 h-4 sm:w-8 sm:h-8 border-b border-l border-foreground/30" />
+          <div className="absolute bottom-0 right-0 w-4 h-4 sm:w-8 sm:h-8 border-b border-r border-foreground/30" />
+
+          {/* Centering Crosshair */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-[0.5px] bg-foreground/20" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[0.5px] h-4 bg-foreground/20" />
+        </div>
+
+        {/* Archival Metadata Overlays */}
+        <div className="absolute inset-x-6 inset-y-20 md:inset-20 lg:inset-32 flex flex-col justify-between pointer-events-none z-30 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
+          <div className="flex justify-between items-start">
+            <div className="space-y-1 sm:block hidden">
+              <p className="text-foreground/40">ARCHIVAL SERIES</p>
+              <p className="text-foreground font-bold italic tracking-[0.1em]">VOL. 01 / BLR</p>
+            </div>
+            <div className="flex items-center gap-3 ml-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_oklch(var(--primary))]" />
+              <p className="text-foreground/60">STATUS: ACTIVE</p>
+            </div>
+          </div>
+          <div className="flex justify-between items-end">
+            <div className="space-y-1 hidden sm:block">
+              <p className="text-foreground/40">COORD / 12.9716° N</p>
+              <p className="text-foreground/40">COORD / 77.5946° E</p>
+            </div>
+            <div className="text-right space-y-1 ml-auto">
+              <p className="text-foreground font-bold tracking-[0.2em]">ISO 100</p>
+              <p className="text-foreground/40 font-mono">f/2.8 | 1/250s</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Hero Content */}
         <motion.div
           style={{ opacity, scale, y }}
-          className="relative z-10 text-center max-w-7xl w-full"
+          className="relative z-10 w-full max-w-7xl pt-24"
         >
-          <h1
-            id="hero-title"
-            className="font-serif text-[clamp(3rem,15vw,20rem)] md:text-[clamp(4rem,18vw,24rem)] uppercase leading-[0.8] tracking-[-0.04em] flex justify-center overflow-hidden"
-            aria-label="Fresnel"
-          >
-            {titleWords.map((char, i) => (
-              <motion.span
-                key={i}
-                initial={{ y: "100%", opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  duration: 1.5,
-                  ease: [0.2, 0.8, 0.2, 1],
-                  delay: 0.1 * i,
-                }}
-                className="inline-block hover:text-gray-600 transition-colors"
-                aria-hidden="true"
-              >
-                {char}
-              </motion.span>
-            ))}
-          </h1>
+          <div className="relative">
+            <h1
+              id="hero-title"
+              className="font-serif text-[clamp(2.5rem,12vw,16rem)] md:text-[clamp(5rem,18vw,22rem)] uppercase leading-none tracking-tight text-center text-foreground flex justify-center overflow-hidden"
+              aria-label="Fresnel Photography"
+            >
+              {["F", "R", "E", "S", "N", "E", "L"].map((char, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ clipPath: "inset(100% 0 0 0)", opacity: 0 }}
+                  animate={{ clipPath: "inset(0 0 0 0)", opacity: 1 }}
+                  transition={{
+                    duration: 1.5,
+                    ease: [0.16, 1, 0.3, 1],
+                    delay: 0.2 + i * 0.1
+                  }}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </h1>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="mt-8 md:mt-12 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 lg:gap-24"
-          >
-            <p className="text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase text-gray-500 order-2 md:order-1">
-              Photography with purpose
-            </p>
-            <div className="w-px h-8 md:h-12 bg-gray-300 hidden md:block order-2" aria-hidden="true"></div>
-            <p className="text-sm md:text-base font-serif italic max-w-[280px] md:max-w-[340px] leading-relaxed text-balance order-1 md:order-3 text-gray-700">
-              Capturing the intentionality of existence through a minimal lens.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.2 }}
-            className="mt-12 md:mt-16"
+            className="mt-16 md:mt-24 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 lg:gap-32"
           >
-            <button
-              onClick={() => scrollToSection('#work')}
-              className="inline-flex items-center gap-3 px-6 md:px-8 py-3 md:py-4 bg-black text-white text-xs tracking-widest uppercase hover:bg-gray-900 transition-all hover:gap-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4"
-            >
-              Explore Gallery
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-            </button>
+            <div className="flex flex-col items-center md:items-start space-y-4">
+              <p className="text-[10px] tracking-[0.5em] uppercase text-muted-foreground">
+                Archival Capture
+              </p>
+              <div className="w-16 h-px bg-foreground/20" />
+            </div>
+
+            <p className="text-base md:text-xl font-serif italic max-w-sm leading-relaxed text-center text-foreground/80">
+              Documenting the quiet intentionality of existence through an archival lens.
+            </p>
+
+            <div className="flex flex-col items-center md:items-end space-y-4">
+              <button
+                onClick={() => scrollToSection('#work')}
+                className="group flex items-center gap-4 text-[10px] tracking-[0.4em] uppercase font-bold text-foreground border-b border-foreground/20 pb-2 hover:border-foreground transition-all"
+              >
+                Entrance
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+              </button>
+            </div>
           </motion.div>
         </motion.div>
 
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.5 }}
+          transition={{ delay: 2, duration: 1 }}
           onClick={() => scrollToSection('#work')}
-          className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 focus:outline-none focus-visible:ring-2 focus-visible:ring-black rounded"
-          aria-label="Scroll to gallery"
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-4 group focus:outline-none"
+          aria-label="Scroll to work"
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center gap-2 text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <span className="text-[10px] tracking-widest uppercase">Scroll</span>
-            <ChevronDown className="w-4 h-4" aria-hidden="true" />
-          </motion.div>
+          <span className="text-[9px] tracking-[0.4em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">Observe</span>
+          <div className="relative w-px h-12 bg-foreground/10 overflow-hidden">
+            <motion.div
+              animate={{ y: ["-100%", "100%"] }}
+              transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+              className="absolute top-0 left-0 w-full h-1/2 bg-foreground"
+            />
+          </div>
         </motion.button>
       </section>
 
       {/* Gallery Section */}
-      <Gallery detailed limit={4} />
+      <Gallery detailed limit={6} />
 
-      {/* Enhanced About Section */}
+      {/* Professional Editorial About Section */}
       <section
         id="about"
-        className="px-6 py-24 md:py-32 lg:py-64 md:px-12 bg-gradient-to-b from-white to-gray-50 border-t border-gray-200"
+        className="px-6 py-24 md:py-32 lg:py-48 md:px-12 bg-background border-t border-border/50 relative overflow-hidden"
         aria-labelledby="about-heading"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-24 items-start max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8 md:space-y-12"
-          >
-            <span className="text-[11px] tracking-[0.4em] uppercase text-gray-500" aria-label="Section: About">About</span>
-            <h2
-              id="about-heading"
-              className="font-serif text-3xl md:text-4xl lg:text-6xl xl:text-7xl leading-[0.9] tracking-tighter text-pretty"
-            >
-              I capture moments that matter to me.
-            </h2>
-          </motion.div>
+        {/* Decorative background element */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-secondary/10 -skew-x-12 translate-x-1/4 pointer-events-none" aria-hidden="true" />
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6 md:space-y-8 text-sm md:text-base lg:text-lg font-light leading-relaxed text-gray-600"
-          >
-            <p>
-              Through my lens, I seek to capture more than just images—I look for the feeling, the intention, the quiet details that often go unnoticed.
-            </p>
-            <p>
-              Photography is my way of slowing down. It helps me stay present and appreciate the beauty in everyday moments. Each frame is a reminder to pause and truly see what's in front of me.
-            </p>
-            <p>
-              My work focuses on minimalism and authenticity. I believe the most powerful images are often the simplest ones—those that let the subject speak for itself.
-            </p>
-            <div className="pt-6 md:pt-8">
-              <Link
-                href="/gallery"
-                className="inline-flex items-center gap-2 text-sm tracking-wider uppercase border-b border-black pb-1 hover:gap-3 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+
+            {/* Left Column: Brand Pillar */}
+            <div className="lg:col-span-5 space-y-8 md:space-y-12">
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="text-[10px] tracking-[0.5em] uppercase text-muted-foreground block"
               >
-                View Full Gallery
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </Link>
+                The Philosophy
+              </motion.span>
+
+              <Reveal direction="right" duration={1.2}>
+                <h2
+                  id="about-heading"
+                  className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.85] tracking-tighter text-foreground"
+                >
+                  The Art <br />
+                  of Intentional <br />
+                  <span className="italic text-primary/80">Stillness.</span>
+                </h2>
+              </Reveal>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.8 }}
+                className="hidden lg:block w-px h-32 bg-gradient-to-b from-primary/50 to-transparent ml-1"
+              />
             </div>
-          </motion.div>
+
+            {/* Right Column: Narrative & Experience Grid */}
+            <div className="lg:col-span-7 space-y-16 md:space-y-24">
+
+              {/* Main Narrative */}
+              <div className="space-y-8 text-lg md:text-xl font-light leading-relaxed text-foreground/90 max-w-2xl">
+                <p className="font-serif italic text-2xl text-foreground">
+                  "Photography is not about seeing what is there, but acknowledging the soul of the ordinary."
+                </p>
+                <div className="space-y-6 text-base md:text-lg text-muted-foreground leading-relaxed">
+                  <p>
+                    {Array.from("Based in Bengaluru, India, Fresnel specializes in capturing the quiet details that define our existence. My work focuses on the intersection of minimalist aesthetics and intentional storytelling across still and motion media.").map((char, i) => (
+                      <motion.span
+                        key={i}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.1, delay: i * 0.005 }}
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                  </p>
+                  <p>
+                    {Array.from("Whether it's editorial portraiture or contemporary landscapes, I seek to preserve authenticity. My portfolio is a collection of curated stories—each frame serving as a reminder to pause and truly observe the world.").map((char, i) => (
+                      <motion.span
+                        key={i}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.1, delay: 0.5 + i * 0.005 }}
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                  </p>
+                </div>
+              </div>
+
+              {/* Brand Pillars / Experience Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12 border-t border-border/50 pt-12 md:pt-16">
+                {[
+                  { title: "Minimalism", desc: "Strip away the noise to reveal the essence of the subject." },
+                  { title: "Archival", desc: "Creating timeless imagery that captures a permanent sense of place." },
+                  { title: "Organic", desc: "Embracing natural light and authentic textures in every frame." },
+                  { title: "Intentional", desc: "Every shutter click is a conscious choice in narrative depth." }
+                ].map((pillar, idx) => (
+                  <motion.div
+                    key={pillar.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 + 0.5, duration: 0.6 }}
+                    className="space-y-3"
+                  >
+                    <h3 className="text-[11px] tracking-[0.3em] uppercase font-bold text-foreground flex items-center gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      {pillar.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed font-light">
+                      {pillar.desc}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1 }}
+                className="pt-4"
+              >
+                <Link
+                  href="/gallery"
+                  className="inline-flex items-center gap-4 text-[10px] tracking-[0.4em] uppercase text-primary font-bold hover:gap-6 transition-all group focus:outline-none"
+                >
+                  Explore the archives
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                </Link>
+              </motion.div>
+            </div>
+
+          </div>
         </div>
-      </section>
+      </section >
 
       {/* Enhanced Footer/Contact */}
       <footer
         id="contact"
-        className="px-6 py-24 md:py-32 lg:py-48 md:px-12 bg-black text-white"
+        className="px-6 py-24 md:py-32 lg:py-48 md:px-12 bg-foreground text-background"
         aria-labelledby="contact-heading"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start max-w-7xl mx-auto">
@@ -384,20 +325,20 @@ export default function Home() {
           >
             <span
               id="contact-heading"
-              className="text-[11px] tracking-[0.4em] uppercase text-gray-400"
+              className="text-[11px] tracking-[0.4em] uppercase text-background/60"
             >
               Get in Touch
             </span>
             <div className="space-y-6">
               <a
                 href="mailto:photography.fresnel@gmail.com"
-                className="group block font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl tracking-tighter hover:italic transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black rounded"
+                className="group block font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl tracking-tighter hover:italic transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-background focus-visible:ring-offset-4 focus-visible:ring-offset-foreground rounded"
               >
-                <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-background to-background/50 bg-clip-text text-transparent brightness-[1.5]">
                   photography.fresnel
                 </span>
                 <br />
-                <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-background to-background/50 bg-clip-text text-transparent brightness-[1.5]">
                   @gmail.com
                 </span>
               </a>
@@ -407,7 +348,7 @@ export default function Home() {
                   href="https://www.instagram.com/fresnelphotography/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-gray-400 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded px-1"
+                  className="group flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-background/60 hover:text-background transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-background rounded px-1"
                   aria-label="Follow on Instagram"
                 >
                   <Instagram className="w-4 h-4" aria-hidden="true" />
@@ -417,7 +358,7 @@ export default function Home() {
                   href="https://bhaskar.xyz"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-gray-400 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded px-1"
+                  className="group flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-background/60 hover:text-background transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-background rounded px-1"
                   aria-label="Visit portfolio website"
                 >
                   <ExternalLink className="w-4 h-4" aria-hidden="true" />
@@ -435,17 +376,17 @@ export default function Home() {
             className="flex flex-col justify-between h-full md:text-right"
           >
             <div className="space-y-4 md:space-y-6">
-              <span className="text-[11px] tracking-[0.4em] uppercase text-gray-400">Studio</span>
-              <p className="text-sm tracking-wide leading-relaxed text-gray-400 max-w-md md:ml-auto">
+              <span className="text-[11px] tracking-[0.4em] uppercase text-background/60">Studio</span>
+              <p className="text-sm tracking-wide leading-relaxed text-background/60 max-w-md md:ml-auto">
                 When I'm not behind the camera, you'll find me wandering the streets of Bengaluru, chasing golden hour, or sitting quietly with a cup of coffee, planning my next adventure.
                 <br /><br />
                 Based in Bengaluru, India.
               </p>
             </div>
 
-            <div className="mt-16 md:mt-0 pt-12 border-t border-gray-800 flex flex-col md:items-end gap-3">
+            <div className="mt-16 md:mt-0 pt-12 border-t border-background/20 flex flex-col md:items-end gap-3">
               <span className="font-serif text-2xl tracking-tighter">Fresnel</span>
-              <span className="text-[9px] tracking-[0.2em] uppercase text-gray-500">
+              <span className="text-[9px] tracking-[0.2em] uppercase text-background/60">
                 © {new Date().getFullYear()} All Rights Reserved
               </span>
             </div>

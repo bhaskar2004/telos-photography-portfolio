@@ -3,26 +3,48 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ===================================
+   DESIGN TOKENS
+   =================================== */
+
 :root {
-  /* Premium "paper" palette - warm, organic, editorial */
-  --background: oklch(0.96 0.01 40);
-  --foreground: oklch(0.15 0.02 40);
-  --card: oklch(0.96 0.01 40);
-  --card-foreground: oklch(0.15 0.02 40);
-  --popover: oklch(0.96 0.01 40);
-  --popover-foreground: oklch(0.15 0.02 40);
-  --primary: oklch(0.25 0.04 140);
-  --primary-foreground: oklch(0.96 0.01 40);
-  --secondary: oklch(0.92 0.02 40);
-  --secondary-foreground: oklch(0.15 0.02 40);
-  --muted: oklch(0.92 0.02 40);
-  --muted-foreground: oklch(0.4 0.02 40);
-  --accent: oklch(0.25 0.04 140);
-  --accent-foreground: oklch(0.96 0.01 40);
-  --border: oklch(0.85 0.02 40);
-  --input: oklch(0.85 0.02 40);
-  --ring: oklch(0.15 0.02 40);
+  /* colour-scheme tells the browser to style native UI (scrollbars,
+     form controls, etc.) for a light background */
+  color-scheme: light;
+
+  /* Linen & Obsidian — Rich, subtle, editorial */
+  --background: oklch(0.96 0.01 70);
+  --foreground: oklch(0.18 0.02 240);
+  --card: oklch(0.97 0.01 70);
+  --card-foreground: oklch(0.18 0.02 240);
+  --popover: oklch(0.97 0.01 70);
+  --popover-foreground: oklch(0.18 0.02 240);
+  --primary: oklch(0.45 0.08 45);
+  --primary-foreground: oklch(0.98 0.01 70);
+  --secondary: oklch(0.92 0.01 70);
+  --secondary-foreground: oklch(0.2 0.02 240);
+  --muted: oklch(0.92 0.01 70);
+  --muted-foreground: oklch(0.45 0.02 240);
+  --accent: oklch(0.45 0.08 45 / 0.1);
+  --accent-foreground: oklch(0.45 0.08 45);
+
+  /* Defined in both themes so destructive utilities work in light mode */
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.97 0.01 25);
+
+  --border: oklch(0.88 0.01 70);
+  --input: oklch(0.88 0.01 70);
+  --ring: oklch(0.45 0.08 45);
   --radius: 0rem;
+
+  /* Chart tokens (light) */
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+
+  /* Sidebar */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -31,28 +53,33 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Shimmer: defined as a token so it adapts per theme */
+  --shimmer-highlight: oklch(0.99 0.005 40 / 0.6);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  color-scheme: dark;
+
+  --background: oklch(0.14 0.02 260);
+  --foreground: oklch(0.94 0.01 70);
+  --card: oklch(0.16 0.02 260);
+  --card-foreground: oklch(0.94 0.01 70);
+  --popover: oklch(0.16 0.02 260);
+  --popover-foreground: oklch(0.94 0.01 70);
+  --primary: oklch(0.82 0.1 70);
+  --primary-foreground: oklch(0.14 0.02 260);
+  --secondary: oklch(0.22 0.02 260);
+  --secondary-foreground: oklch(0.94 0.01 70);
+  --muted: oklch(0.22 0.02 260);
+  --muted-foreground: oklch(0.65 0.02 70);
+  --accent: oklch(0.82 0.1 70 / 0.15);
+  --accent-foreground: oklch(0.82 0.1 70);
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
+  --border: oklch(0.22 0.02 260);
+  --input: oklch(0.22 0.02 260);
+  --ring: oklch(0.82 0.1 70);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -66,6 +93,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+
+  --shimmer-highlight: oklch(0.3 0 0 / 0.6);
 }
 
 @theme inline {
@@ -111,49 +140,75 @@
 }
 
 /* ===================================
-   BASE STYLES - Enhanced UX
+   BASE STYLES
    =================================== */
+
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+
+  /* Font smoothing belongs only on text containers, not every element.
+     Applying -webkit-font-smoothing to * wastes style resolution and
+     has no effect on non-text nodes. */
+  html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* Contextual alternates + kerning + ligatures for the typefaces in use */
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    /* overflow-x on html alone; applying it to both html AND body can
+       silently break position: sticky on descendants */
+    overflow-x: hidden;
   }
 
-  html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-    font-feature-settings: "kern" 1, "liga" 1;
-  }
+  /* Note: scroll-behavior: smooth is intentionally omitted here.
+     The <SmoothScroll> component handles JS-based scroll — enabling both
+     causes doubled / janky easing. */
 
   body {
-    @apply bg-background text-foreground selection:bg-primary selection:text-primary-foreground tracking-tight;
-    min-height: 100vh;
+    @apply bg-background text-foreground tracking-tight;
+    /* selection moved to ::selection pseudo-element below */
+    min-height: 100svh;
+    /* svh avoids the mobile browser chrome height jump */
     overflow-x: hidden;
-    position: relative;
   }
 
-  /* Better default link styles */
+  /* Use border-box sizing globally for predictable layout */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    @apply border-border;
+  }
+
+  /* Default focus ring — overridden with focus-visible below */
+  *:focus {
+    outline: none;
+  }
+
   a {
     @apply transition-colors duration-300;
     text-decoration: none;
   }
 
-  /* Improved button resets */
   button {
-    @apply transition-all duration-300;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Better image handling */
-  img {
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+    display: block;
     @apply select-none;
     -webkit-user-drag: none;
-    user-select: none;
   }
 
-  /* Custom scrollbar */
+  /* Firefox scrollbar — scoped to html to avoid overriding every element */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.4 0.02 40 / 0.3) oklch(0.92 0.02 40);
+  }
+
+  /* Custom scrollbar — WebKit */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -164,27 +219,25 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/30 hover:bg-muted-foreground/50;
+    @apply bg-muted-foreground/30;
     border-radius: 100px;
     transition: background-color 0.3s ease;
   }
 
-  /* Firefox scrollbar */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: oklch(0.4 0.02 40 / 0.3) oklch(0.92 0.02 40);
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
   }
 }
 
 /* ===================================
-   CUSTOM ANIMATIONS
+   ANIMATIONS
    =================================== */
 
-/* Enhanced reveal animation with better timing */
 @keyframes reveal {
   from {
     opacity: 0;
     transform: translateY(30px) scale(0.98);
+    /* blur in keyframes is GPU-expensive; remove if performance is a concern */
     filter: blur(4px);
   }
 
@@ -195,27 +248,6 @@
   }
 }
 
-.reveal {
-  animation: reveal 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-/* Smooth reveal utility with intersection observer support */
-.smooth-reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1),
-    transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1),
-    filter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-  filter: blur(4px);
-}
-
-.smooth-reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
-
-/* Fade in from bottom */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -228,7 +260,6 @@
   }
 }
 
-/* Fade in from left */
 @keyframes fadeInLeft {
   from {
     opacity: 0;
@@ -241,7 +272,6 @@
   }
 }
 
-/* Scale in */
 @keyframes scaleIn {
   from {
     opacity: 0;
@@ -254,74 +284,78 @@
   }
 }
 
-/* Shimmer loading effect */
+/* Shimmer: uses --shimmer-highlight token so it adapts to light/dark */
 @keyframes shimmer {
-  0% {
+  from {
     background-position: -1000px 0;
   }
 
-  100% {
+  to {
     background-position: 1000px 0;
   }
 }
 
+/* ===================================
+   VISUAL UTILITIES
+   =================================== */
+
+.reveal {
+  animation: reveal 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.smooth-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  filter: blur(4px);
+  transition:
+    opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.smooth-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Shimmer — uses theme-aware token */
 .shimmer {
   background: linear-gradient(90deg,
       transparent,
-      oklch(0.96 0.01 40 / 0.5),
+      var(--shimmer-highlight),
       transparent);
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
 }
 
-/* ===================================
-   VISUAL ENHANCEMENTS
-   =================================== */
-
-/* Enhanced grain texture - more subtle and refined */
+/* Grain texture overlay.
+   z-index 100 is intentional: sits above page content but modals/lightboxes
+   should use z-index >= 101 to render above the grain. */
 .grain::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
   z-index: 100;
   opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+  /* multiply blends grain into the page without affecting hue in dark mode */
   mix-blend-mode: multiply;
 }
 
-/* Enhanced vignette for better depth */
-body::after {
+/* Subtle vignette — avoids mix-blend-mode on body to prevent the
+   stacking-context side-effects that can break fixed children */
+.grain::after {
   content: "";
   position: fixed;
   inset: 0;
-  box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.04);
+  box-shadow: inset 0 0 200px oklch(0 0 0 / 0.04);
   pointer-events: none;
   z-index: 99;
-  mix-blend-mode: multiply;
 }
 
-/* ===================================
-   UTILITY CLASSES
-   =================================== */
-
-/* Custom easing functions */
-.cubic-bezier {
-  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.ease-smooth {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ease-bounce {
-  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-/* Glass morphism utility */
+/* Glass morphism */
 .glass {
   background: oklch(0.96 0.01 40 / 0.8);
   backdrop-filter: blur(12px) saturate(180%);
@@ -336,41 +370,11 @@ body::after {
   border: 1px solid oklch(0.25 0.04 140 / 0.3);
 }
 
-/* Enhanced focus states for accessibility */
-*:focus-visible {
-  outline: 2px solid oklch(0.15 0.02 40);
-  outline-offset: 3px;
-  transition: outline-offset 0.2s ease;
-}
-
-button:focus-visible,
-a:focus-visible {
-  outline-offset: 5px;
-}
-
-/* Disable focus outline for mouse users */
-*:focus:not(:focus-visible) {
-  outline: none;
-}
-
 /* ===================================
-   INTERACTIVE ELEMENTS
+   INTERACTIVE UTILITIES
    =================================== */
 
-/* Enhanced button hover states */
-button,
-.btn {
-  @apply overflow-hidden;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-button:active,
-.btn:active {
-  transform: scale(0.98);
-}
-
-/* Magnetic hover effect utility */
+/* Magnetic lift — used on buttons and cards */
 .magnetic {
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -379,46 +383,68 @@ button:active,
   transform: translateY(-2px);
 }
 
-/* ===================================
-   TEXT SELECTION ENHANCEMENTS
-   =================================== */
-
-::selection {
-  @apply bg-primary text-primary-foreground;
-  text-shadow: none;
+/* Custom easing helpers */
+.ease-out-expo {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-::-moz-selection {
-  @apply bg-primary text-primary-foreground;
-  text-shadow: none;
+.ease-smooth {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===================================
-   IMAGE OPTIMIZATION
-   =================================== */
-
-/* Image loading states removed - using Tailwind opacity classes instead */
-
-/* Prevent layout shift */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+.ease-bounce {
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-/* ===================================
-   PERFORMANCE OPTIMIZATIONS
-   =================================== */
+/* Scrollbar hide (used by horizontal filter bar) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
-/* GPU acceleration for smooth animations */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* GPU acceleration — apply sparingly on elements that genuinely animate */
 .gpu-accelerated {
   transform: translateZ(0);
   backface-visibility: hidden;
-  perspective: 1000px;
-  will-change: transform, opacity;
+  /* will-change deferred to elements that actually need it; declaring it
+     globally here keeps the door open without forcing GPU layers everywhere */
 }
 
-/* Reduce motion for accessibility */
+/* ===================================
+   FOCUS & ACCESSIBILITY
+   =================================== */
+
+/* Keyboard focus ring — visible only for keyboard/sequential navigation */
+*:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  transition: outline-offset 0.15s ease;
+  border-radius: var(--radius-sm);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline-offset: 5px;
+}
+
+/* ===================================
+   TEXT SELECTION
+   =================================== */
+
+::selection {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  text-shadow: none;
+}
+
+/* ===================================
+   REDUCED MOTION
+   =================================== */
+
 @media (prefers-reduced-motion: reduce) {
 
   *,
@@ -427,61 +453,62 @@ img {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  html {
     scroll-behavior: auto !important;
   }
 
+  /* Remove purely cosmetic overlays for users who prefer less motion */
   .grain::before,
-  body::after {
+  .grain::after {
     display: none;
   }
 }
 
 /* ===================================
-   RESPONSIVE UTILITIES
+   TOUCH TARGETS (WCAG 2.5.8)
    =================================== */
 
-/* Better mobile touch targets */
 @media (hover: none) and (pointer: coarse) {
 
   button,
   a,
   input,
   select,
-  textarea {
+  textarea,
+  [role="button"] {
     min-height: 44px;
     min-width: 44px;
   }
 }
 
-/* High contrast mode support */
+/* ===================================
+   HIGH CONTRAST
+   =================================== */
+
 @media (prefers-contrast: high) {
   :root {
     --foreground: oklch(0 0 0);
     --background: oklch(1 0 0);
     --border: oklch(0 0 0);
+    --ring: oklch(0 0 0);
   }
 
   .grain::before,
-  body::after {
+  .grain::after {
     display: none;
   }
 }
 
-/* Dark mode optimizations */
-@media (prefers-color-scheme: dark) {
-  .dark body::after {
-    box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.3);
-  }
-}
-
 /* ===================================
-   PRINT STYLES
+   PRINT
    =================================== */
 
 @media print {
 
   .grain::before,
-  body::after,
+  .grain::after,
   nav,
   button,
   .no-print {
@@ -491,14 +518,22 @@ img {
   body {
     background: white;
     color: black;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
-  a {
-    text-decoration: underline;
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    color: #555;
+  }
+
+  /* Suppress URL expansion for in-page anchors */
+  a[href^="#"]::after {
+    content: "";
   }
 
   img {
-    max-width: 100%;
     page-break-inside: avoid;
   }
 }
