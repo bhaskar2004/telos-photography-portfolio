@@ -233,7 +233,7 @@ function AboutSection() {
             <div className="flex-1 h-px bg-foreground/8" aria-hidden="true" />
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0">
             {PILLARS.map((p, i) => (
               <motion.div
                 key={p.index}
@@ -244,7 +244,11 @@ function AboutSection() {
                 className={[
                   "group relative px-4 py-8 sm:py-10",
                   "sm:px-8 lg:px-10",
-                  i > 0 ? "border-t sm:border-t-0 sm:border-l border-foreground/8" : "",
+                  "border-foreground/8",
+                  i % 2 !== 0 ? "border-l" : "border-l-0",
+                  i >= 2 ? "border-t" : "border-t-0",
+                  "lg:border-t-0",
+                  i > 0 ? "lg:border-l" : "lg:border-l-0",
                 ].join(" ")}
               >
                 {/* Index */}
@@ -304,8 +308,8 @@ function ContactSection() {
   }
 
   const inputBase =
-    "w-full bg-transparent border-b border-contact-rule py-3 text-sm text-contact-text placeholder:text-contact-meta " +
-    "focus:outline-none focus:border-contact-text transition-colors duration-300 resize-none"
+    "w-full bg-transparent border-b border-contact-rule py-4 text-base text-contact-text placeholder:text-contact-meta/60 " +
+    "focus:outline-none focus:border-contact-text transition-colors duration-300 resize-none font-sans"
 
   return (
     <footer
@@ -348,7 +352,7 @@ function ContactSection() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: EASE }}
-          className="inline-flex items-center gap-3 text-[9px] sm:text-[10px] tracking-[0.5em] uppercase text-contact-meta mb-10 sm:mb-14"
+          className="inline-flex items-center gap-3 text-[10px] sm:text-xs tracking-[0.4em] uppercase text-contact-meta mb-10 sm:mb-14 font-sans font-medium"
         >
           <span className="w-6 h-px bg-contact-rule" aria-hidden="true" />
           Get in Touch
@@ -415,11 +419,11 @@ function ContactSection() {
             className="lg:col-span-5 flex flex-col gap-12"
           >
             {/* Studio blurb */}
-            <div className="space-y-4">
-              <p className="font-mono text-[9px] tracking-[0.45em] uppercase text-contact-meta mb-3">
+            <div className="space-y-5">
+              <p className="font-sans text-[10px] sm:text-xs tracking-[0.3em] uppercase text-contact-meta font-bold mb-1">
                 Studio
               </p>
-              <p className="text-contact-text text-sm sm:text-base leading-[1.85]">
+              <p className="text-contact-text text-base sm:text-lg leading-[1.8] font-sans">
                 When not behind the camera, you'll find me wandering the streets of Bengaluru,
                 chasing golden hour, or sitting quietly with a coffee, planning the next adventure.
               </p>
@@ -427,8 +431,8 @@ function ContactSection() {
 
             {/* Location pill */}
             <div className="inline-flex items-center gap-2.5 border border-contact-pill rounded-full px-4 py-2 w-fit">
-              <MapPin className="w-3 h-3 text-contact-meta" aria-hidden="true" />
-              <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.35em] uppercase text-contact-meta">
+              <MapPin className="w-3.5 h-3.5 text-contact-meta" aria-hidden="true" />
+              <span className="font-sans text-[9px] sm:text-[10px] tracking-[0.25em] uppercase text-contact-meta font-medium">
                 Bengaluru, India — 12.97° N
               </span>
             </div>
@@ -459,18 +463,18 @@ function ContactSection() {
             </div>
 
             {/* HUD-style meta */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-6 border-t border-contact-rule pt-8 mb-4 lg:mb-0">
+            <div className="grid grid-cols-2 gap-x-10 gap-y-8 border-t border-contact-rule pt-10 mb-6 lg:mb-0">
               {[
                 { label: "Response", value: "24–48 hrs" },
                 { label: "Format", value: "Still + Motion" },
                 { label: "Base", value: "Bengaluru, IN" },
                 { label: "Series", value: "Vol. 01 Active" },
               ].map(({ label, value }) => (
-                <div key={label} className="flex flex-col gap-0.5">
-                  <span className="font-mono text-[7px] tracking-[0.4em] uppercase text-contact-meta/50">
+                <div key={label} className="flex flex-col gap-1.5">
+                  <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-contact-meta/60 font-bold">
                     {label}
                   </span>
-                  <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.25em] text-contact-text">
+                  <span className="font-sans text-sm tracking-[0.1em] text-contact-text font-medium">
                     {value}
                   </span>
                 </div>
@@ -486,7 +490,7 @@ function ContactSection() {
             transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
             className="lg:col-span-7"
           >
-            <p className="font-mono text-[9px] tracking-[0.45em] uppercase text-contact-meta mb-8">
+            <p className="font-sans text-[10px] sm:text-xs tracking-[0.3em] uppercase text-contact-meta font-bold mb-10">
               Send a Message
             </p>
 
@@ -518,7 +522,7 @@ function ContactSection() {
                 <div className="relative">
                   <label
                     htmlFor="contact-name"
-                    className="font-mono text-[8px] tracking-[0.4em] uppercase text-contact-meta block mb-2"
+                    className="font-sans text-[10px] sm:text-xs tracking-[0.2em] uppercase text-contact-meta font-bold block mb-3"
                   >
                     Name
                   </label>
@@ -537,7 +541,7 @@ function ContactSection() {
                 <div className="relative">
                   <label
                     htmlFor="contact-email"
-                    className="font-mono text-[8px] tracking-[0.4em] uppercase text-contact-meta block mb-2"
+                    className="font-sans text-[10px] sm:text-xs tracking-[0.2em] uppercase text-contact-meta font-bold block mb-3"
                   >
                     Email
                   </label>
@@ -556,7 +560,7 @@ function ContactSection() {
                 <div className="relative">
                   <label
                     htmlFor="contact-message"
-                    className="font-mono text-[8px] tracking-[0.4em] uppercase text-contact-meta block mb-2"
+                    className="font-sans text-[10px] sm:text-xs tracking-[0.2em] uppercase text-contact-meta font-bold block mb-3"
                   >
                     Message
                   </label>
@@ -619,11 +623,11 @@ function ContactSection() {
             Fresnel
           </span>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-8">
-            <span className="font-mono text-[7px] sm:text-[8px] tracking-[0.35em] uppercase text-contact-meta">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-10">
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-contact-meta font-medium">
               VOL. 01 // BLR // MMXXVI
             </span>
-            <span className="font-mono text-[7px] sm:text-[8px] tracking-[0.3em] uppercase text-contact-meta">
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-[0.15em] uppercase text-contact-meta font-medium">
               © {new Date().getFullYear()} All Rights Reserved
             </span>
           </div>
