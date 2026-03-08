@@ -21,6 +21,19 @@ export default function Particles() {
         const mouseDistance = 200
 
         let mouse = { x: 0, y: 0 }
+        let dpr = 1
+        let foregroundColor = "rgba(0, 0, 0, 1)"
+
+        const updateColors = () => {
+            const style = getComputedStyle(document.documentElement)
+            const foreground = style.getPropertyValue("--foreground").trim()
+            // Convert oklch to something canvas can use or just use a fallback
+            // Since we use the grain overlay and specific colors, we can derive a safe rgba
+            // For simplicity, let's use the actual foreground color if it's rendered by the browser
+            // or stick to a simplified theme-aware approach.
+            const isDark = document.documentElement.classList.contains("dark")
+            foregroundColor = isDark ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)"
+        }
 
         class Particle {
             x: number
@@ -32,38 +45,34 @@ export default function Particles() {
             constructor(w: number, h: number) {
                 this.x = Math.random() * w
                 this.y = Math.random() * h
-                this.vx = (Math.random() - 0.5) * 0.5
-                this.vy = (Math.random() - 0.5) * 0.5
-                this.size = Math.random() * 2 + 1
+                this.vx = (Math.random() - 0.5) * 0.4
+                this.vy = (Math.random() - 0.5) * 0.4
+                this.size = (Math.random() * 2 + 1) * dpr
             }
 
             update(w: number, h: number) {
                 this.x += this.vx
                 this.y += this.vy
 
-                // Bounce off walls
                 if (this.x < 0 || this.x > w) this.vx *= -1
                 if (this.y < 0 || this.y > h) this.vy *= -1
 
-                // Mouse interaction
-                const dx = mouse.x - this.x
-                const dy = mouse.y - this.y
+                const dx = (mouse.x * dpr) - this.x
+                const dy = (mouse.y * dpr) - this.y
                 const distance = Math.sqrt(dx * dx + dy * dy)
 
-                if (distance < mouseDistance) {
+                if (distance < mouseDistance * dpr) {
                     const forceDirectionX = dx / distance
                     const forceDirectionY = dy / distance
-                    const force = (mouseDistance - distance) / mouseDistance
-                    const directionX = forceDirectionX * force * 0.05
-                    const directionY = forceDirectionY * force * 0.05
-                    this.vx += directionX
-                    this.vy += directionY
+                    const force = (mouseDistance * dpr - distance) / (mouseDistance * dpr)
+                    this.vx += forceDirectionX * force * 0.05
+                    this.vy += forceDirectionY * force * 0.05
                 }
             }
 
             draw() {
                 if (!ctx) return
-                ctx.fillStyle = "rgba(0, 0, 0, 1)"
+                ctx.fillStyle = foregroundColor
                 ctx.beginPath()
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
                 ctx.fill()
@@ -80,23 +89,26 @@ export default function Particles() {
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-            // Update and draw particles
+            updateColors()
+
             particles.forEach(particle => {
                 particle.update(canvas.width, canvas.height)
                 particle.draw()
             })
 
-            // Draw connections
             particles.forEach((a, i) => {
                 particles.slice(i + 1).forEach(b => {
                     const dx = a.x - b.x
                     const dy = a.y - b.y
                     const distance = Math.sqrt(dx * dx + dy * dy)
 
-                    if (distance < connectionDistance) {
-                        const opacity = 1 - distance / connectionDistance
-                        ctx.strokeStyle = `rgba(0, 0, 0, ${opacity * 0.4})`
-                        ctx.lineWidth = 1
+                    if (distance < connectionDistance * dpr) {
+                        const opacity = (1 - distance / (connectionDistance * dpr)) * 0.3
+                        const isDark = document.documentElement.classList.contains("dark")
+                        ctx.strokeStyle = isDark
+                            ? `rgba(255, 255, 255, ${opacity})`
+                            : `rgba(0, 0, 0, ${opacity})`
+                        ctx.lineWidth = 1 * dpr
                         ctx.beginPath()
                         ctx.moveTo(a.x, a.y)
                         ctx.lineTo(b.x, b.y)
@@ -109,8 +121,11 @@ export default function Particles() {
         }
 
         const handleResize = () => {
-            canvas.width = window.innerWidth
-            canvas.height = window.innerHeight
+            dpr = window.devicePixelRatio || 1
+            canvas.width = window.innerWidth * dpr
+            canvas.height = window.innerHeight * dpr
+            canvas.style.width = `${window.innerWidth}px`
+            canvas.style.height = `${window.innerHeight}px`
             init()
         }
 

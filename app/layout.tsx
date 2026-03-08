@@ -10,9 +10,9 @@ import "./globals.css"
 
 const SITE_URL = "https://fresnel.bhaskar.xyz"
 const SITE_NAME = "Fresnel Photography"
-const SITE_TITLE = "Fresnel — Archival Photography & Cinematic Storytelling"
+const SITE_TITLE = "Fresnel | Fine Art Photography Studio in Bengaluru"
 const SITE_DESCRIPTION =
-  "Fresnel is a minimalist photography studio specialized in archival storytelling, editorial commissions, and fine-art landscapes. Based in Bengaluru, India."
+  "Fresnel brings the physics of light to fine art photography. Our Bengaluru studio captures archival-quality portraits through intentional focus and optics."
 const OG_IMAGE = "/og-image.png"
 
 // ─── Fonts ────────────────────────────────────────────────────────────────────
@@ -48,13 +48,19 @@ export const metadata: Metadata = {
   keywords: [
     "Fresnel",
     "Fresnel Photography",
-    "Cinematic Storytelling",
+    "Fresnel Studio",
+    "Fresnel Photography Studio",
+    "Professional Photography Bengaluru",
+    "Creative Photography Studio India",
+    "Fine Art Photography",
+    "Optics",
+    "Refraction",
+    "Diffraction",
+    "Wavelength",
+    "Lens",
     "Archival Photography",
     "Minimalist Photographer Bengaluru",
     "Editorial Photography Portfolio",
-    "Fine Art Photography India",
-    "Bespoke Portraiture",
-    "Contemporary Art Photography",
     "Visual Storyteller India",
   ],
   authors: [{ name: SITE_NAME, url: SITE_URL }],
@@ -71,9 +77,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: SITE_TITLE,
+    title: "Fresnel | Artistry Meets the Physics of Light",
     description:
-      "Explore the archival photography of Fresnel. A collection of intentional moments, cinematic landscapes, and minimalist storytelling.",
+      "Experience a distinctive visual collaboration at Fresnel, a Bengaluru-based creative studio specializing in archival fine-art photography.",
     images: [
       {
         url: OG_IMAGE,
@@ -165,18 +171,16 @@ const jsonLdGraph = {
     {
       "@type": "Person",
       "@id": `${SITE_URL}/#person`,
-      name: SITE_NAME,
+      name: "Bhaskar",
+      alternateName: "Fresnel",
       url: SITE_URL,
       sameAs: [
         "https://www.instagram.com/fresnelphotography/",
         "https://bhaskar.xyz",
       ],
       jobTitle: "Photographer",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Bengaluru",
-        addressRegion: "Karnataka",
-        addressCountry: "IN", // ISO 3166-1 alpha-2 — schema.org expects this format
+      worksFor: {
+        "@id": `${SITE_URL}/#business`
       },
       description: SITE_DESCRIPTION,
     },
@@ -184,19 +188,18 @@ const jsonLdGraph = {
       "@type": ["LocalBusiness", "ProfessionalService"],
       "@id": `${SITE_URL}/#business`,
       name: SITE_NAME,
-      // image must be an array of URLs per Google's Rich Results guidelines
+      alternateName: "Fresnel",
       image: [`${SITE_URL}${OG_IMAGE}`],
       url: SITE_URL,
-      // telephone omitted — an empty string is worse than no field;
-      // Google may treat it as missing data and suppress the rich result
       address: {
         "@type": "PostalAddress",
+        streetAddress: "Bengaluru",
         addressLocality: "Bengaluru",
         addressRegion: "Karnataka",
+        postalCode: "560001",
         addressCountry: "IN",
       },
       priceRange: "$$",
-      // schema.org OpeningHoursSpecification uses `opens`/`closes`, NOT `from`/`to`
       openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: [
@@ -211,8 +214,8 @@ const jsonLdGraph = {
         opens: "00:00",
         closes: "23:59",
       },
-      // Cross-reference the Person entity so crawlers can link them
       founder: { "@id": `${SITE_URL}/#person` },
+      knowsAbout: ["Photography", "Archival Storytelling", "Cinematic Visuals", "Editorial Photography"],
     },
   ],
 }

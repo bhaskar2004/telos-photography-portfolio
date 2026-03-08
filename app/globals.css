@@ -7,44 +7,97 @@
    DESIGN TOKENS
    =================================== */
 
+/*
+  Palette concept — "Daguerreotype"
+  ─────────────────────────────────
+  Light mode: warm stone paper (hue 55–65) backgrounds, near-black
+              charcoal ink (hue 45) foreground. Everything on the same
+              warm axis — no blue-grey tension.
+  Dark  mode: deep warm obsidian (hue 45–50) — cinematic, not cold.
+              Gold primary replaces the muted amber.
+  Primary:    rich bronze-gold, readable on both backgrounds.
+*/
+
 :root {
-  /* colour-scheme tells the browser to style native UI (scrollbars,
-     form controls, etc.) for a light background */
   color-scheme: light;
 
-  /* Linen & Obsidian — Rich, subtle, editorial */
-  --background: oklch(0.96 0.01 70);
-  --foreground: oklch(0.18 0.02 240);
-  --card: oklch(0.97 0.01 70);
-  --card-foreground: oklch(0.18 0.02 240);
-  --popover: oklch(0.97 0.01 70);
-  --popover-foreground: oklch(0.18 0.02 240);
-  --primary: oklch(0.45 0.08 45);
-  --primary-foreground: oklch(0.98 0.01 70);
-  --secondary: oklch(0.92 0.01 70);
-  --secondary-foreground: oklch(0.2 0.02 240);
-  --muted: oklch(0.92 0.01 70);
-  --muted-foreground: oklch(0.45 0.02 240);
-  --accent: oklch(0.45 0.08 45 / 0.1);
-  --accent-foreground: oklch(0.45 0.08 45);
+  /* ── Surfaces ─────────────────────────────────────────────────────── */
+  --background: oklch(0.965 0.008 58);
+  /* warm stone paper       */
+  --foreground: oklch(0.15 0.018 45);
+  /* charcoal ink — warm    */
 
-  /* Defined in both themes so destructive utilities work in light mode */
-  --destructive: oklch(0.55 0.22 25);
+  --card: oklch(0.975 0.007 58);
+  /* slightly lighter paper */
+  --card-foreground: oklch(0.15 0.018 45);
+
+  --popover: oklch(0.975 0.007 58);
+  --popover-foreground: oklch(0.15 0.018 45);
+
+  /* ── Brand ────────────────────────────────────────────────────────── */
+  --primary: oklch(0.42 0.095 48);
+  /* deep bronze            */
+  --primary-foreground: oklch(0.97 0.008 58);
+
+  /* ── Supporting surfaces ──────────────────────────────────────────── */
+  --secondary: oklch(0.925 0.010 58);
+  /* warm light linen       */
+  --secondary-foreground: oklch(0.18 0.018 45);
+
+  --muted: oklch(0.925 0.010 58);
+  --muted-foreground: oklch(0.48 0.018 50);
+  /* warm mid-tone          */
+
+  --accent: oklch(0.42 0.095 48 / 0.08);
+  --accent-foreground: oklch(0.42 0.095 48);
+
+  /* ── State ────────────────────────────────────────────────────────── */
+  --destructive: oklch(0.52 0.22 25);
   --destructive-foreground: oklch(0.97 0.01 25);
 
-  --border: oklch(0.88 0.01 70);
-  --input: oklch(0.88 0.01 70);
-  --ring: oklch(0.45 0.08 45);
+  /* ── Chrome ───────────────────────────────────────────────────────── */
+  --border: oklch(0.875 0.012 58);
+  /* warm subtle rule       */
+  --input: oklch(0.875 0.012 58);
+  --ring: oklch(0.42 0.095 48);
   --radius: 0rem;
 
-  /* Chart tokens (light) */
+  /* ── Section-specific tokens ─────────────────────────────────────── */
+  /*   About section sits on --background; these give it visual lift    */
+  --about-rule: oklch(0.875 0.012 58);
+  /* divider lines  */
+  --about-ghost: oklch(0.15 0.018 45 / 0.025);
+  /* large numerals */
+  --about-stat: oklch(0.15 0.018 45);
+  /* stat figures   */
+  --about-meta: oklch(0.48 0.018 50);
+  /* caption text   */
+
+  /*   Contact footer is always bg-foreground (dark on dark) —          */
+  /*   these tokens make the dark-surface variants explicit             */
+  --contact-bg: oklch(0.15 0.018 45);
+  /* = foreground           */
+  --contact-surface: oklch(0.20 0.018 45);
+  /* slightly lighter panel */
+  --contact-rule: oklch(1 0 0 / 0.08);
+  /* white rules            */
+  --contact-text: oklch(1 0 0 / 0.75);
+  /* body on dark — increased contrast */
+  --contact-meta: oklch(1 0 0 / 0.45);
+  /* hud / labels — increased contrast  */
+  --contact-ghost: oklch(1 0 0 / 0.03);
+  /* large ghost numeral    */
+  --contact-pill: oklch(1 0 0 / 0.12);
+  /* border pills — increased contrast  */
+
+  /* ── Charts ───────────────────────────────────────────────────────── */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
 
-  /* Sidebar */
+  /* ── Sidebar ──────────────────────────────────────────────────────── */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -54,37 +107,73 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* Shimmer: defined as a token so it adapts per theme */
-  --shimmer-highlight: oklch(0.99 0.005 40 / 0.6);
+  /* ── Shimmer ──────────────────────────────────────────────────────── */
+  --shimmer-highlight: oklch(0.99 0.006 55 / 0.65);
 }
 
 .dark {
   color-scheme: dark;
 
-  --background: oklch(0.14 0.02 260);
-  --foreground: oklch(0.94 0.01 70);
-  --card: oklch(0.16 0.02 260);
-  --card-foreground: oklch(0.94 0.01 70);
-  --popover: oklch(0.16 0.02 260);
-  --popover-foreground: oklch(0.94 0.01 70);
-  --primary: oklch(0.82 0.1 70);
-  --primary-foreground: oklch(0.14 0.02 260);
-  --secondary: oklch(0.22 0.02 260);
-  --secondary-foreground: oklch(0.94 0.01 70);
-  --muted: oklch(0.22 0.02 260);
-  --muted-foreground: oklch(0.65 0.02 70);
-  --accent: oklch(0.82 0.1 70 / 0.15);
-  --accent-foreground: oklch(0.82 0.1 70);
+  /* ── Surfaces ─────────────────────────────────────────────────────── */
+  --background: oklch(0.135 0.018 45);
+  /* warm obsidian          */
+  --foreground: oklch(0.945 0.010 60);
+  /* warm off-white         */
+
+  --card: oklch(0.165 0.018 45);
+  --card-foreground: oklch(0.945 0.010 60);
+
+  --popover: oklch(0.165 0.018 45);
+  --popover-foreground: oklch(0.945 0.010 60);
+
+  /* ── Brand ────────────────────────────────────────────────────────── */
+  --primary: oklch(0.80 0.11 68);
+  /* warm gold              */
+  --primary-foreground: oklch(0.13 0.018 45);
+
+  /* ── Supporting surfaces ──────────────────────────────────────────── */
+  --secondary: oklch(0.215 0.018 45);
+  --secondary-foreground: oklch(0.945 0.010 60);
+
+  --muted: oklch(0.215 0.018 45);
+  --muted-foreground: oklch(0.62 0.018 60);
+  /* warm mid-tone          */
+
+  --accent: oklch(0.80 0.11 68 / 0.12);
+  --accent-foreground: oklch(0.80 0.11 68);
+
+  /* ── State ────────────────────────────────────────────────────────── */
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.22 0.02 260);
-  --input: oklch(0.22 0.02 260);
-  --ring: oklch(0.82 0.1 70);
+
+  /* ── Chrome ───────────────────────────────────────────────────────── */
+  --border: oklch(0.215 0.018 45);
+  --input: oklch(0.215 0.018 45);
+  --ring: oklch(0.80 0.11 68);
+
+  /* ── Section tokens (dark) ────────────────────────────────────────── */
+  --about-rule: oklch(0.215 0.018 45);
+  --about-ghost: oklch(0.945 0.010 60 / 0.025);
+  --about-stat: oklch(0.945 0.010 60);
+  --about-meta: oklch(0.62 0.018 60);
+
+  --contact-bg: oklch(0.945 0.010 60);
+  /* inverted in dark mode  */
+  --contact-surface: oklch(0.88 0.010 60);
+  --contact-rule: oklch(0.135 0.018 45 / 0.12);
+  --contact-text: oklch(0.135 0.018 45 / 0.75);
+  --contact-meta: oklch(0.135 0.018 45 / 0.50);
+  --contact-ghost: oklch(0.135 0.018 45 / 0.04);
+  --contact-pill: oklch(0.135 0.018 45 / 0.15);
+
+  /* ── Charts ───────────────────────────────────────────────────────── */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
+
+  /* ── Sidebar ──────────────────────────────────────────────────────── */
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -94,12 +183,13 @@
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
 
-  --shimmer-highlight: oklch(0.3 0 0 / 0.6);
+  --shimmer-highlight: oklch(0.30 0.008 45 / 0.65);
 }
 
 @theme inline {
   --font-sans: var(--font-sans), ui-sans-serif, system-ui;
   --font-serif: var(--font-serif), ui-serif, Georgia;
+  --font-mono: var(--font-mono), ui-monospace, "Courier New";
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -137,6 +227,19 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Expose section tokens to Tailwind's utility layer */
+  --color-about-rule: var(--about-rule);
+  --color-about-ghost: var(--about-ghost);
+  --color-about-stat: var(--about-stat);
+  --color-about-meta: var(--about-meta);
+  --color-contact-bg: var(--contact-bg);
+  --color-contact-surface: var(--contact-surface);
+  --color-contact-rule: var(--contact-rule);
+  --color-contact-text: var(--contact-text);
+  --color-contact-meta: var(--contact-meta);
+  --color-contact-ghost: var(--contact-ghost);
+  --color-contact-pill: var(--contact-pill);
 }
 
 /* ===================================
@@ -145,33 +248,23 @@
 
 @layer base {
 
-  /* Font smoothing belongs only on text containers, not every element.
-     Applying -webkit-font-smoothing to * wastes style resolution and
-     has no effect on non-text nodes. */
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    /* Contextual alternates + kerning + ligatures for the typefaces in use */
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
-    /* overflow-x on html alone; applying it to both html AND body can
-       silently break position: sticky on descendants */
     overflow-x: hidden;
+    /* Warm scroll thumb to match palette */
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.42 0.095 48 / 0.28) oklch(0.925 0.010 58);
   }
-
-  /* Note: scroll-behavior: smooth is intentionally omitted here.
-     The <SmoothScroll> component handles JS-based scroll — enabling both
-     causes doubled / janky easing. */
 
   body {
     @apply bg-background text-foreground tracking-tight;
-    /* selection moved to ::selection pseudo-element below */
     min-height: 100svh;
-    /* svh avoids the mobile browser chrome height jump */
     overflow-x: hidden;
   }
 
-  /* Use border-box sizing globally for predictable layout */
   *,
   *::before,
   *::after {
@@ -179,7 +272,6 @@
     @apply border-border;
   }
 
-  /* Default focus ring — overridden with focus-visible below */
   *:focus {
     outline: none;
   }
@@ -202,30 +294,35 @@
     -webkit-user-drag: none;
   }
 
-  /* Firefox scrollbar — scoped to html to avoid overriding every element */
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: oklch(0.4 0.02 40 / 0.3) oklch(0.92 0.02 40);
-  }
-
-  /* Custom scrollbar — WebKit */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-secondary;
+    background: oklch(0.925 0.010 58);
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/30;
+    background: oklch(0.42 0.095 48 / 0.28);
     border-radius: 100px;
     transition: background-color 0.3s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/50;
+    background: oklch(0.42 0.095 48 / 0.50);
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: oklch(0.165 0.018 45);
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: oklch(0.80 0.11 68 / 0.25);
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.80 0.11 68 / 0.45);
   }
 }
 
@@ -237,7 +334,6 @@
   from {
     opacity: 0;
     transform: translateY(30px) scale(0.98);
-    /* blur in keyframes is GPU-expensive; remove if performance is a concern */
     filter: blur(4px);
   }
 
@@ -284,7 +380,6 @@
   }
 }
 
-/* Shimmer: uses --shimmer-highlight token so it adapts to light/dark */
 @keyframes shimmer {
   from {
     background-position: -1000px 0;
@@ -319,7 +414,6 @@
   filter: blur(0);
 }
 
-/* Shimmer — uses theme-aware token */
 .shimmer {
   background: linear-gradient(90deg,
       transparent,
@@ -329,52 +423,109 @@
   animation: shimmer 2s infinite;
 }
 
-/* Grain texture overlay.
-   z-index 100 is intentional: sits above page content but modals/lightboxes
-   should use z-index >= 101 to render above the grain. */
+/* ── Grain ─────────────────────────────────────────────────────────────
+   z-index 100: sits above page content.
+   Lightboxes / modals must use z-index ≥ 101.
+   mix-blend-mode: multiply keeps grain neutral in both themes.
+   ────────────────────────────────────────────────────────────────── */
 .grain::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 100;
-  opacity: 0.03;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
-  /* multiply blends grain into the page without affecting hue in dark mode */
   mix-blend-mode: multiply;
 }
 
-/* Subtle vignette — avoids mix-blend-mode on body to prevent the
-   stacking-context side-effects that can break fixed children */
 .grain::after {
   content: "";
   position: fixed;
   inset: 0;
-  box-shadow: inset 0 0 200px oklch(0 0 0 / 0.04);
+  /* Warm vignette instead of neutral black */
+  box-shadow: inset 0 0 200px oklch(0.12 0.02 45 / 0.05);
   pointer-events: none;
   z-index: 99;
 }
 
-/* Glass morphism */
+/* ── Glass ───────────────────────────────────────────────────────────── */
 .glass {
-  background: oklch(0.96 0.01 40 / 0.8);
+  background: oklch(0.965 0.008 58 / 0.82);
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid oklch(0.85 0.02 40 / 0.5);
+  border: 1px solid oklch(0.875 0.012 58 / 0.6);
 }
 
 .glass-dark {
-  background: oklch(0.15 0.02 40 / 0.8);
+  background: oklch(0.15 0.018 45 / 0.82);
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid oklch(0.25 0.04 140 / 0.3);
+  border: 1px solid oklch(0.28 0.018 45 / 0.35);
+}
+
+/* ===================================
+   SECTION HELPERS
+   =================================== */
+
+/*
+  About section decorative number.
+  Apply to the large ghost "01" — picks up --about-ghost token.
+*/
+.about-ghost-numeral {
+  color: var(--about-ghost);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/*
+  Contact section surface.
+  The contact footer inverts the theme (light: dark bg, dark: light bg).
+  Use .contact-surface on panel cards inside the footer.
+*/
+.contact-surface {
+  background-color: var(--contact-surface);
+}
+
+/*
+  Underline input — used inside the dark contact footer.
+  Plain border-b input that inherits foreground.
+*/
+.contact-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--contact-rule);
+  padding: 0.625rem 0;
+  font-size: 0.875rem;
+  color: var(--contact-bg);
+  /* inverted: foreground on dark bg */
+  transition: border-color 0.3s ease;
+  outline: none;
+  resize: none;
+}
+
+/* Swap text color for light-on-dark usage (the actual footer) */
+.contact-section .contact-input {
+  color: oklch(1 0 0 / 0.90);
+  border-bottom-color: var(--contact-rule);
+}
+
+.contact-section .contact-input::placeholder {
+  color: oklch(1 0 0 / 0.28);
+}
+
+.contact-section .contact-input:focus {
+  border-bottom-color: oklch(1 0 0 / 0.6);
 }
 
 /* ===================================
    INTERACTIVE UTILITIES
    =================================== */
 
-/* Magnetic lift — used on buttons and cards */
 .magnetic {
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -383,7 +534,6 @@
   transform: translateY(-2px);
 }
 
-/* Custom easing helpers */
 .ease-out-expo {
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -396,7 +546,6 @@
   transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-/* Scrollbar hide (used by horizontal filter bar) */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -406,19 +555,15 @@
   display: none;
 }
 
-/* GPU acceleration — apply sparingly on elements that genuinely animate */
 .gpu-accelerated {
   transform: translateZ(0);
   backface-visibility: hidden;
-  /* will-change deferred to elements that actually need it; declaring it
-     globally here keeps the door open without forcing GPU layers everywhere */
 }
 
 /* ===================================
    FOCUS & ACCESSIBILITY
    =================================== */
 
-/* Keyboard focus ring — visible only for keyboard/sequential navigation */
 *:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 3px;
@@ -436,9 +581,14 @@ a:focus-visible {
    =================================== */
 
 ::selection {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
+  background-color: oklch(0.42 0.095 48 / 0.20);
+  color: var(--foreground);
   text-shadow: none;
+}
+
+.dark ::selection {
+  background-color: oklch(0.80 0.11 68 / 0.25);
+  color: var(--foreground);
 }
 
 /* ===================================
@@ -459,7 +609,6 @@ a:focus-visible {
     scroll-behavior: auto !important;
   }
 
-  /* Remove purely cosmetic overlays for users who prefer less motion */
   .grain::before,
   .grain::after {
     display: none;
@@ -493,6 +642,7 @@ a:focus-visible {
     --background: oklch(1 0 0);
     --border: oklch(0 0 0);
     --ring: oklch(0 0 0);
+    --primary: oklch(0 0 0);
   }
 
   .grain::before,
@@ -528,7 +678,6 @@ a:focus-visible {
     color: #555;
   }
 
-  /* Suppress URL expansion for in-page anchors */
   a[href^="#"]::after {
     content: "";
   }

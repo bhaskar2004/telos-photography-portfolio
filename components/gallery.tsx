@@ -2,9 +2,9 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
-import { useRef, useState, useEffect, useCallback, type KeyboardEvent } from "react"
-import { X, ZoomIn, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
+import { useRef, useState, useEffect, useCallback, useMemo, type KeyboardEvent } from "react"
+import { X, ZoomIn, ChevronLeft, ChevronRight, ArrowRight, ArrowUpRight } from "lucide-react"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -13,7 +13,6 @@ interface Photo {
   src: string
   title: string
   category: string
-  span: string
   description: string
   width: number
   height: number
@@ -25,99 +24,133 @@ const photos: Photo[] = [
   {
     id: 1,
     src: "/photo1.jpg",
-    title: "Misty Highlands - Nature Photography",
+    title: "Misty Highlands",
     category: "Landscape",
-    span: "md:col-span-2",
-    description: "Atmospheric landscape photography of misty hills and lush green forests, capturing the raw beauty of mountainous wilderness.",
+    description: "Editorial portrait with soft refraction and deep shadows by Fresnel, Bengaluru.",
     width: 1920,
     height: 1080,
   },
   {
     id: 2,
     src: "/photo2.jpg",
-    title: "Urban Skyline - Minimalist Sunset",
+    title: "Urban Skyline",
     category: "Architecture",
-    span: "md:col-span-1",
-    description: "Minimalist urban sunset photography featuring power lines framing a glowing sun against a deep blue sky in Bengaluru.",
+    description: "Close-up of a lens aperture reflecting the architectural lines of Bengaluru, an archival optics study.",
     width: 1080,
     height: 1350,
   },
   {
     id: 3,
     src: "/photo3.jpg",
-    title: "Golden Hour Lake - Fine Art Landscape",
+    title: "Golden Hour Lake",
     category: "Landscape",
-    span: "md:col-span-1",
-    description: "Serene lakeside landscape at golden hour, with distant mountains reflecting in the calm water of a mountain lake.",
+    description: "A fine art photography session utilizing high-contrast diffraction and natural light focus.",
     width: 1080,
     height: 1350,
   },
   {
     id: 4,
     src: "/photo4.jpg",
-    title: "Dusk Silhouette - Tropical Minimalist",
+    title: "Dusk Silhouette",
     category: "Editorial",
-    span: "md:col-span-1",
-    description: "Monochrome editorial photography of palm trees silhouetted against a dramatic tropical sky at dusk.",
+    description: "Black and white archival print showing exceptional depth of field and human connection.",
     width: 1080,
     height: 1440,
   },
   {
     id: 5,
     src: "/photo5.jpg",
-    title: "Eternal Rose - Fine Art Monochrome",
+    title: "Eternal Rose",
     category: "Still Life",
-    span: "md:col-span-1",
-    description: "Dramatic fine-art monochrome photography of a backlit rose, highlighting the delicate petals against a moody sky.",
+    description: "Cinematic studio setup focusing on the wavelength of golden hour light for an editorial portrait.",
     width: 1080,
     height: 1620,
   },
   {
     id: 6,
     src: "/photo6.jpg",
-    title: "Twilight Branches - Natural Forms",
+    title: "Twilight Branches",
     category: "Landscape",
-    span: "md:col-span-2",
-    description: "Abstract natural form photography featuring stark tree branches silhouetted against the fading twilight sky in monochrome.",
+    description: "Stark tree branches silhouetted against fading twilight, a cinematic capture by Fresnel.",
     width: 1920,
     height: 1080,
   },
   {
     id: 7,
     src: "/photo7.jpg",
-    title: "Village Oasis - Rural Life",
+    title: "Village Oasis",
     category: "Documentary",
-    span: "md:col-span-1",
-    description: "Documentary photography of crystal-clear water gushing into a village pond, set against a backdrop of vibrant green rice fields in rural India.",
+    description: "Crystal-clear water gushing into a village pond amid rice fields, documented by Fresnel.",
     width: 1080,
     height: 1350,
   },
   {
     id: 9,
     src: "/photo9.jpg",
-    title: "Nature's Geometry - Fern Study",
+    title: "Nature's Geometry",
     category: "Macro",
-    span: "md:col-span-1",
-    description: "Detailed macro photography of intricate fern fronds, showcasing the delicate organic patterns and vibrant emerald hues of nature.",
+    description: "Macro study of intricate fern fronds in emerald hues by Fresnel.",
     width: 1080,
     height: 1350,
   },
   {
     id: 10,
     src: "/photo10.jpg",
-    title: "Evergreen Depth - Forest Texture",
+    title: "Evergreen Depth",
     category: "Macro",
-    span: "md:col-span-1",
-    description: "Abstract close-up of dense evergreen foliage, capturing the rich textures and deep shadows of a coniferous forest.",
+    description: "Abstract close-up of dense evergreen foliage, rich textures captured by Fresnel Photography.",
     width: 1080,
     height: 1440,
   },
 ]
 
-// ─── Easing ───────────────────────────────────────────────────────────────────
+// ─── Constants ────────────────────────────────────────────────────────────────
 
 const EASE_EXPO = [0.16, 1, 0.3, 1] as const
 const EASE_SPRING = [0.34, 1.56, 0.64, 1] as const
+const GAP = 16 // px — matches gap-4
+
+// ─── True Masonry Hook ───────────────────────────────────────────────────────
+//
+// Distributes items into N columns by always picking the shortest column
+// (measured as cumulative normalised aspect-ratio height). This is the
+// "Pinterest" algorithm — no CSS columns, no grid spans needed.
+
+function useMasonryColumns(items: Photo[], columnCount: number): Photo[][] {
+  return useMemo(() => {
+    const cols: Photo[][] = Array.from({ length: columnCount }, () => [])
+    const heights = new Array<number>(columnCount).fill(0)
+
+    for (const item of items) {
+      const shortest = heights.indexOf(Math.min(...heights))
+      cols[shortest].push(item)
+      heights[shortest] += item.height / item.width // aspect ratio as proxy for rendered height
+    }
+
+    return cols
+  }, [items, columnCount])
+}
+
+// ─── useColumnCount ──────────────────────────────────────────────────────────
+
+function useColumnCount(containerRef: React.RefObject<HTMLElement | null>): number {
+  const [cols, setCols] = useState(3)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const update = () => {
+      const w = el.offsetWidth
+      setCols(w < 560 ? 1 : w < 900 ? 2 : 3)
+    }
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [containerRef])
+
+  return cols
+}
 
 // ─── Gallery ──────────────────────────────────────────────────────────────────
 
@@ -127,148 +160,183 @@ interface GalleryProps {
 }
 
 export function Gallery({ detailed = false, limit }: GalleryProps) {
-  const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null)
-  const [filter, setFilter] = useState<string>("All")
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [filter, setFilter] = useState("All")
+  const containerRef = useRef<HTMLDivElement>(null)
+  const columnCount = useColumnCount(containerRef)
 
-  // Derive unique categories once; memo would help but photos is static
-  const categories = ["All", ...Array.from(new Set(photos.map((p) => p.category)))]
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(photos.map((p) => p.category)))],
+    []
+  )
 
-  const filteredPhotos = filter === "All" ? photos : photos.filter((p) => p.category === filter)
-  const displayedPhotos = limit ? filteredPhotos.slice(0, limit) : filteredPhotos
+  const filteredPhotos = useMemo(
+    () => (filter === "All" ? photos : photos.filter((p) => p.category === filter)),
+    [filter]
+  )
 
-  // Stable callbacks so child components don't get unnecessary re-renders
+  const displayedPhotos = useMemo(
+    () => (limit ? filteredPhotos.slice(0, limit) : filteredPhotos),
+    [filteredPhotos, limit]
+  )
+
+  const masonryCols = useMasonryColumns(displayedPhotos, columnCount)
+
   const openLightbox = useCallback((index: number) => {
-    setSelectedPhoto(index)
+    setSelectedIndex(index)
     document.body.style.overflow = "hidden"
   }, [])
 
   const closeLightbox = useCallback(() => {
-    setSelectedPhoto(null)
+    setSelectedIndex(null)
     document.body.style.overflow = ""
   }, [])
 
-  const navigatePhoto = useCallback(
-    (direction: "prev" | "next") => {
-      setSelectedPhoto((prev) => {
+  const navigate = useCallback(
+    (dir: "prev" | "next") => {
+      setSelectedIndex((prev) => {
         if (prev === null) return null
-        if (direction === "prev") return prev === 0 ? displayedPhotos.length - 1 : prev - 1
-        return prev === displayedPhotos.length - 1 ? 0 : prev + 1
+        const len = displayedPhotos.length
+        return dir === "prev" ? (prev === 0 ? len - 1 : prev - 1) : (prev === len - 1 ? 0 : prev + 1)
       })
     },
     [displayedPhotos.length]
   )
 
-  // Restore scroll if component unmounts while lightbox is open
-  useEffect(() => {
-    return () => {
-      document.body.style.overflow = ""
-    }
-  }, [])
+  useEffect(() => () => { document.body.style.overflow = "" }, [])
 
   return (
     <>
-      <section id="work" aria-label="Photography gallery" className="grain px-4 sm:px-6 py-16 sm:py-20 md:px-12 md:py-32 relative">
-        {/* Header */}
+      <section
+        id="work"
+        aria-label="Photography gallery"
+        className="px-4 sm:px-6 md:px-12 py-20 md:py-32 bg-background"
+      >
+        {/* ── Section header ─────────────────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 1.2, ease: EASE_EXPO }}
-          className="mb-12 sm:mb-16 md:mb-24"
+          className="max-w-7xl mx-auto mb-14 md:mb-20 flex flex-col sm:flex-row sm:items-end justify-between gap-6"
         >
-          {/* Use h1 only when this is the page's primary heading; h2 otherwise */}
-          <h2 className="font-serif text-3xl sm:text-5xl md:text-7xl lg:text-8xl tracking-tight mb-4 sm:mb-6 text-foreground">
-            Photography Gallery
-          </h2>
-          <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl leading-relaxed">
-            A curated collection of moments captured through the lens
+          <div>
+            <p className="text-[9px] tracking-[0.5em] uppercase text-muted-foreground mb-4">
+              Selected Work
+            </p>
+            <h2 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.85] text-foreground">
+              The Archive
+            </h2>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-xs leading-relaxed sm:text-right">
+            A curated collection of moments,<br className="hidden sm:block" /> captured through an archival lens.
           </p>
         </motion.div>
 
-        {/* Filter Bar */}
+        {/* ── Filter bar ─────────────────────────────────────────────────── */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1.2, delay: 0.1, ease: EASE_EXPO }}
-          className="mb-10 sm:mb-12 md:mb-16"
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.1, ease: EASE_EXPO }}
+          className="max-w-7xl mx-auto mb-12 md:mb-16"
         >
-          {/* role="group" + aria-label groups the filter buttons semantically */}
           <div
             role="group"
             aria-label="Filter by category"
-            className="flex overflow-x-auto gap-2 sm:gap-3 pb-2 scrollbar-hide"
+            className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide"
           >
-            {categories.map((cat, idx) => (
-              <motion.button
-                key={cat}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: idx * 0.05, ease: EASE_EXPO }}
-                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setFilter(cat)}
-                aria-pressed={filter === cat}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 text-[10px] sm:text-sm tracking-[0.2em] uppercase transition-all duration-500 whitespace-nowrap flex-shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${filter === cat
-                  ? "bg-primary text-primary-foreground shadow-lg"
-                  : "bg-secondary text-secondary-foreground hover:bg-border hover:shadow-md"
-                  }`}
-              >
-                {cat}
-              </motion.button>
-            ))}
+            {categories.map((cat, i) => {
+              const active = filter === cat
+              return (
+                <motion.button
+                  key={cat}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.05, ease: EASE_EXPO }}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={() => setFilter(cat)}
+                  aria-pressed={active}
+                  className={[
+                    "relative px-4 sm:px-5 py-2 text-[9px] sm:text-[10px] tracking-[0.35em] uppercase whitespace-nowrap flex-shrink-0",
+                    "transition-colors duration-300 rounded-full border",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                    active
+                      ? "bg-foreground text-background border-foreground"
+                      : "bg-transparent text-foreground/50 border-foreground/15 hover:text-foreground hover:border-foreground/40",
+                  ].join(" ")}
+                >
+                  {cat}
+                </motion.button>
+              )
+            })}
           </div>
         </motion.div>
 
-        {/* Masonry Gallery Grid */}
-        <motion.div
-          layout
-          transition={{ layout: { duration: 0.6, ease: EASE_EXPO } }}
-          className="columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-6 md:gap-8 block w-full"
+        {/* ── True Masonry Grid ──────────────────────────────────────────── */}
+        <div
+          ref={containerRef}
+          className="max-w-7xl mx-auto"
+          style={{ display: "flex", gap: GAP, alignItems: "flex-start" }}
         >
-          <AnimatePresence mode="popLayout">
-            {displayedPhotos.map((photo, index) => (
-              <GalleryItem
-                key={photo.id}
-                photo={photo}
-                index={index}
-                detailed={detailed}
-                onClick={() => openLightbox(index)}
-              />
+          <AnimatePresence mode="wait">
+            {masonryCols.map((col, colIdx) => (
+              <div
+                key={`col-${colIdx}-${columnCount}`}
+                style={{ flex: 1, display: "flex", flexDirection: "column", gap: GAP }}
+              >
+                {col.map((photo, rowIdx) => {
+                  // global index into displayedPhotos for lightbox
+                  const globalIndex = displayedPhotos.indexOf(photo)
+                  return (
+                    <GalleryItem
+                      key={photo.id}
+                      photo={photo}
+                      index={rowIdx + colIdx * 3}
+                      detailed={detailed}
+                      onClick={() => openLightbox(globalIndex)}
+                    />
+                  )
+                })}
+              </div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
-        {/* Image Counter */}
-        <motion.p
-          aria-live="polite"
-          aria-atomic="true"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+        {/* ── Footer row ─────────────────────────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1.2, delay: 0.3, ease: EASE_EXPO }}
-          className="mt-12 sm:mt-16 md:mt-24 text-center text-muted-foreground text-xs sm:text-sm tracking-[0.3em] uppercase"
+          transition={{ duration: 1, delay: 0.3, ease: EASE_EXPO }}
+          className="max-w-7xl mx-auto mt-14 md:mt-20 flex flex-col sm:flex-row items-center justify-between gap-6"
         >
-          {displayedPhotos.length} {displayedPhotos.length === 1 ? "Image" : "Images"}
-        </motion.p>
+          <p
+            aria-live="polite"
+            aria-atomic="true"
+            className="text-[9px] tracking-[0.35em] uppercase text-muted-foreground"
+          >
+            {displayedPhotos.length} {displayedPhotos.length === 1 ? "image" : "images"} shown
+          </p>
 
-        <div className="flex justify-center mt-12 md:mt-16">
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground text-xs tracking-widest uppercase hover:opacity-90 transition-all hover:gap-4 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            className="group inline-flex items-center gap-3 text-[10px] tracking-[0.4em] uppercase font-bold
+                       text-foreground border-b border-foreground/20 pb-1.5 hover:border-foreground
+                       transition-all duration-200 focus-visible:outline-none"
           >
-            View Full Gallery
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+            View full archive
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform" aria-hidden="true" />
           </Link>
-        </div>
+        </motion.div>
       </section>
 
       <Lightbox
         photos={displayedPhotos}
-        selectedIndex={selectedPhoto}
+        selectedIndex={selectedIndex}
         onClose={closeLightbox}
-        onNavigate={navigatePhoto}
+        onNavigate={navigate}
       />
     </>
   )
@@ -284,123 +352,118 @@ interface GalleryItemProps {
 }
 
 function GalleryItem({ photo, index, detailed, onClick }: GalleryItemProps) {
+  const [loaded, setLoaded] = useState(false)
+  const [hovered, setHovered] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const [imageLoaded, setImageLoaded] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  })
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
+  // Subtle parallax on the inner image only — doesn't affect card height
+  const imgY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"])
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50])
-
-  // Allow keyboard activation (Enter / Space) for the card
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault()
-      onClick?.()
-    }
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick?.() }
   }
 
-  // Zero-pad index up to 2 digits. Works correctly for index ≥ 9 (avoids "010").
   const displayIndex = String(index + 1).padStart(2, "0")
+  const aspectRatio = photo.width / photo.height
 
   return (
     <motion.div
       ref={ref}
-      layout
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: "-50px" }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 1, delay: index * 0.05, ease: EASE_EXPO }}
-      animate={{
-        y: [0, -4, 0],
-        transition: {
-          duration: 4 + (index % 3),
-          repeat: Infinity,
-          ease: "easeInOut"
-        }
-      }}
-      whileHover={{ y: -10, transition: { duration: 0.4, ease: EASE_EXPO } }}
-      className="break-inside-avoid mb-4 sm:mb-6 md:mb-8 group cursor-pointer relative bg-card shadow-lg hover:shadow-2xl transition-shadow duration-500 rounded-sm overflow-hidden inline-block w-full"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      exit={{ opacity: 0, scale: 0.97 }}
+      transition={{ duration: 0.9, delay: index * 0.04, ease: EASE_EXPO }}
+      whileHover={{ y: -6, transition: { duration: 0.4, ease: EASE_EXPO } }}
+      className="group cursor-pointer relative overflow-hidden bg-muted/20 rounded-sm shadow-md hover:shadow-xl transition-shadow duration-500"
+      style={{ aspectRatio }}
       onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      // Accessibility: make the card a focusable, keyboard-operable button-like element
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       role="button"
       tabIndex={0}
       aria-label={`Open ${photo.title} in lightbox`}
       onKeyDown={handleKeyDown}
     >
-      <div className="relative overflow-hidden bg-muted/30">
-        {/* Loading skeleton */}
-        {!imageLoaded && (
-          <div className="absolute inset-0 bg-muted shimmer" aria-hidden="true" />
-        )}
+      {/* Skeleton */}
+      {!loaded && (
+        <div className="absolute inset-0 bg-muted animate-pulse" aria-hidden="true" />
+      )}
 
-        <motion.div style={{ y }} className="relative w-full">
-          <Image
-            src={photo.src || "/placeholder.svg"}
-            alt={photo.description}
-            width={photo.width}
-            height={photo.height}
-            quality={90}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            onLoad={() => setImageLoaded(true)}
-            loading={index < 2 ? "eager" : "lazy"}
-            priority={index < 2}
-            className={`w-full h-auto transition-all duration-[1200ms] ease-out group-hover:scale-[1.08] ${imageLoaded ? "opacity-100" : "opacity-0"
-              }`}
-          />
-        </motion.div>
+      {/* Image with parallax */}
+      <motion.div
+        style={{ y: imgY, scale: 1.1 }}
+        className="absolute inset-0 w-full h-full will-change-transform"
+      >
+        <Image
+          src={photo.src || "/placeholder.svg"}
+          alt={photo.description}
+          fill
+          quality={85}
+          sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 33vw"
+          onLoad={() => setLoaded(true)}
+          loading={index < 3 ? "eager" : "lazy"}
+          priority={index < 3}
+          className={[
+            "object-cover transition-all duration-[1400ms] ease-out",
+            "group-hover:scale-[1.06]",
+            loaded ? "opacity-100" : "opacity-0",
+          ].join(" ")}
+        />
+      </motion.div>
 
-        {/* Hover overlay */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.6, ease: EASE_EXPO }}
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-center justify-center"
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.4, delay: 0.1, ease: EASE_SPRING }}
-          >
-            <div className="glass p-3 sm:p-4 rounded-full">
-              <ZoomIn className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-            </div>
-          </motion.div>
-        </motion.div>
-      </div>
+      {/* ── Hover overlay ─────────────────────────────────────────────── */}
+      <motion.div
+        initial={false}
+        animate={{ opacity: hovered ? 1 : 0 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/0 z-10"
+        aria-hidden="true"
+      />
 
-      {/* Info */}
-      <div className="p-4 sm:p-6 md:p-8 bg-card">
-        <div className="flex justify-between items-baseline border-b border-border pb-3 sm:pb-4">
-          <div className="space-y-1 sm:space-y-2">
-            <h3 className="font-serif text-xl sm:text-2xl md:text-3xl tracking-tight leading-none text-card-foreground">
-              {photo.title}
-            </h3>
-            <p className="text-[8px] sm:text-[9px] tracking-[0.3em] uppercase text-muted-foreground">
-              {photo.category}
-            </p>
-          </div>
-          <span
-            aria-hidden="true"
-            className="text-[10px] sm:text-[11px] font-serif italic text-muted-foreground/60"
-          >
-            {displayIndex}
-          </span>
+      {/* Top-right: index + expand icon */}
+      <motion.div
+        initial={false}
+        animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : -8 }}
+        transition={{ duration: 0.35, ease: EASE_EXPO }}
+        className="absolute top-4 right-4 z-20 flex items-center gap-2"
+        aria-hidden="true"
+      >
+        <span className="font-mono text-[9px] tracking-[0.3em] text-white/60">{displayIndex}</span>
+        <div className="w-7 h-7 rounded-full border border-white/25 bg-white/10 backdrop-blur-sm flex items-center justify-center">
+          <ArrowUpRight className="w-3.5 h-3.5 text-white" />
         </div>
+      </motion.div>
 
+      {/* Bottom: title + category */}
+      <motion.div
+        initial={false}
+        animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 12 }}
+        transition={{ duration: 0.4, delay: 0.05, ease: EASE_EXPO }}
+        className="absolute bottom-0 inset-x-0 z-20 p-5 sm:p-6"
+      >
+        <p className="text-[8px] sm:text-[9px] tracking-[0.35em] uppercase text-white/55 mb-1.5">
+          {photo.category}
+        </p>
+        <h3 className="font-serif text-lg sm:text-xl md:text-2xl tracking-tight leading-tight text-white">
+          {photo.title}
+        </h3>
         {detailed && (
-          <p className="mt-3 sm:mt-4 text-xs sm:text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-2 text-xs text-white/60 leading-relaxed line-clamp-2">
             {photo.description}
           </p>
         )}
-      </div>
+      </motion.div>
+
+      {/* Subtle border glow on hover */}
+      <motion.div
+        initial={false}
+        animate={{ opacity: hovered ? 1 : 0 }}
+        transition={{ duration: 0.4 }}
+        className="absolute inset-0 z-30 ring-1 ring-white/10 rounded-sm pointer-events-none"
+        aria-hidden="true"
+      />
     </motion.div>
   )
 }
@@ -411,177 +474,190 @@ interface LightboxProps {
   photos: Photo[]
   selectedIndex: number | null
   onClose: () => void
-  onNavigate: (direction: "prev" | "next") => void
+  onNavigate: (dir: "prev" | "next") => void
 }
 
-const MIN_SWIPE_DISTANCE = 50
+const MIN_SWIPE = 48
 
 function Lightbox({ photos, selectedIndex, onClose, onNavigate }: LightboxProps) {
-  const selectedPhoto = selectedIndex !== null ? photos[selectedIndex] : null
+  const photo = selectedIndex !== null ? photos[selectedIndex] : null
+  const closeRef = useRef<HTMLButtonElement>(null)
   const touchStartX = useRef<number | null>(null)
-  const closeButtonRef = useRef<HTMLButtonElement>(null)
 
-  // Touch state kept in refs to avoid re-renders mid-swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.targetTouches[0].clientX
-  }
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return
-    const distance = touchStartX.current - e.changedTouches[0].clientX
-    if (Math.abs(distance) >= MIN_SWIPE_DISTANCE) {
-      onNavigate(distance > 0 ? "next" : "prev")
-    }
-    touchStartX.current = null
-  }
-
-  // Keyboard navigation
+  // Keyboard
   useEffect(() => {
-    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
+    const handle = (e: globalThis.KeyboardEvent) => {
       if (selectedIndex === null) return
       if (e.key === "Escape") onClose()
       if (e.key === "ArrowLeft") onNavigate("prev")
       if (e.key === "ArrowRight") onNavigate("next")
     }
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
+    window.addEventListener("keydown", handle)
+    return () => window.removeEventListener("keydown", handle)
   }, [selectedIndex, onClose, onNavigate])
 
-  // Trap focus inside the dialog when open
+  // Focus trap
   useEffect(() => {
-    if (selectedIndex !== null) {
-      closeButtonRef.current?.focus()
-    }
+    if (selectedIndex !== null) closeRef.current?.focus()
   }, [selectedIndex])
 
-  if (!selectedPhoto) return null
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const dx = touchStartX.current - e.changedTouches[0].clientX
+    if (Math.abs(dx) >= MIN_SWIPE) onNavigate(dx > 0 ? "next" : "prev")
+    touchStartX.current = null
+  }
 
   return (
     <AnimatePresence>
-      {selectedIndex !== null && (
-        /* role="dialog" + aria-modal tells screen readers this is a modal */
+      {selectedIndex !== null && photo && (
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label={`Lightbox: ${selectedPhoto.title}`}
+          aria-label={`Lightbox: ${photo.title}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: EASE_EXPO }}
-          className="fixed inset-0 z-[110] bg-[oklch(0_0_0_/_0.96)] backdrop-blur-md flex items-center justify-center grain"
+          transition={{ duration: 0.4 }}
+          className="fixed inset-0 z-[110] bg-black/95 backdrop-blur-sm flex flex-col items-center justify-center"
           onClick={onClose}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
         >
-          {/* Close */}
-          <motion.button
-            ref={closeButtonRef}
-            initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            exit={{ opacity: 0, scale: 0.8, rotate: 90 }}
-            transition={{ duration: 0.4, delay: 0.2, ease: EASE_SPRING }}
-            whileHover={{ scale: 1.1, rotate: 90, transition: { duration: 0.3 } }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onClose}
-            aria-label="Close lightbox"
-            className="absolute top-4 sm:top-6 right-4 sm:right-6 z-[120] p-3 sm:p-4 glass-dark rounded-full hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
-          >
-            <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" aria-hidden="true" />
-          </motion.button>
-
-          {/* Prev */}
-          <motion.button
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -30 }}
-            transition={{ duration: 0.4, delay: 0.2, ease: EASE_EXPO }}
-            whileHover={{ scale: 1.1, x: -5, transition: { duration: 0.2 } }}
-            whileTap={{ scale: 0.95 }}
-            onClick={(e) => { e.stopPropagation(); onNavigate("prev") }}
-            aria-label="Previous photo"
-            className="hidden sm:flex absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-[120] p-3 sm:p-4 glass-dark rounded-full hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
-          >
-            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" aria-hidden="true" />
-          </motion.button>
-
-          {/* Next */}
-          <motion.button
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 30 }}
-            transition={{ duration: 0.4, delay: 0.2, ease: EASE_EXPO }}
-            whileHover={{ scale: 1.1, x: 5, transition: { duration: 0.2 } }}
-            whileTap={{ scale: 0.95 }}
-            onClick={(e) => { e.stopPropagation(); onNavigate("next") }}
-            aria-label="Next photo"
-            className="hidden sm:flex absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-[120] p-3 sm:p-4 glass-dark rounded-full hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
-          >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" aria-hidden="true" />
-          </motion.button>
-
-          {/* Image Container */}
-          <motion.div
-            key={selectedIndex}
-            initial={{ scale: 0.85, opacity: 0, y: 40 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.85, opacity: 0, y: 40 }}
-            transition={{ duration: 0.6, ease: EASE_EXPO }}
-            className="relative w-full max-w-[90vw] sm:max-w-[85vw] max-h-[85vh] sm:max-h-[75vh] flex flex-col items-center justify-center px-4 sm:px-0"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="relative w-full flex items-center justify-center">
-              <div className="relative overflow-hidden rounded-sm shadow-2xl w-full">
-                <Image
-                  src={selectedPhoto.src}
-                  alt={selectedPhoto.description}
-                  width={selectedPhoto.width}
-                  height={selectedPhoto.height}
-                  quality={90}
-                  priority // lightbox image should load immediately
-                  className="max-w-full max-h-[55vh] sm:max-h-[70vh] w-auto h-auto object-contain mx-auto"
-                />
-              </div>
+          {/* ── Top bar ──────────────────────────────────────────────── */}
+          <div className="absolute top-0 inset-x-0 z-20 flex items-center justify-between px-5 sm:px-8 py-5 sm:py-6">
+            <div>
+              <p className="font-mono text-[8px] sm:text-[9px] tracking-[0.4em] uppercase text-white/35">
+                {photo.category}
+              </p>
+              <p className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] text-white/50 mt-0.5">
+                {String(selectedIndex + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
+              </p>
             </div>
 
-            {/* Caption */}
-            <motion.div
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: EASE_EXPO }}
-              className="mt-6 sm:mt-8 text-center space-y-2 sm:space-y-3 max-w-3xl px-4"
+            <motion.button
+              ref={closeRef}
+              initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
+              animate={{ opacity: 1, rotate: 0, scale: 1 }}
+              exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
+              transition={{ duration: 0.35, ease: EASE_SPRING }}
+              whileHover={{ rotate: 90, scale: 1.1, transition: { duration: 0.25 } }}
+              whileTap={{ scale: 0.9 }}
+              onClick={(e) => { e.stopPropagation(); onClose() }}
+              aria-label="Close lightbox"
+              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/15 bg-white/5 backdrop-blur-md
+                         flex items-center justify-center hover:border-white/35 transition-colors
+                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
             >
-              <h2 className="text-white font-serif text-2xl sm:text-3xl md:text-4xl tracking-tight">
-                {selectedPhoto.title}
-              </h2>
+              <X className="w-4 h-4 sm:w-5 sm:h-5 text-white" aria-hidden="true" />
+            </motion.button>
+          </div>
 
-              <p className="text-white/60 text-xs sm:text-sm tracking-[0.2em] uppercase">
-                {selectedPhoto.category} &bull; {selectedPhoto.width} &times; {selectedPhoto.height}
-              </p>
+          {/* ── Prev / Next ────────────────────────────────────────────── */}
+          {[
+            { dir: "prev" as const, Icon: ChevronLeft, side: "left-4 sm:left-6 md:left-10" },
+            { dir: "next" as const, Icon: ChevronRight, side: "right-4 sm:right-6 md:right-10" },
+          ].map(({ dir, Icon, side }) => (
+            <motion.button
+              key={dir}
+              initial={{ opacity: 0, x: dir === "prev" ? -20 : 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: dir === "prev" ? -20 : 20 }}
+              transition={{ duration: 0.4, delay: 0.15, ease: EASE_EXPO }}
+              whileHover={{ scale: 1.1, x: dir === "prev" ? -3 : 3, transition: { duration: 0.2 } }}
+              whileTap={{ scale: 0.93 }}
+              onClick={(e) => { e.stopPropagation(); onNavigate(dir) }}
+              aria-label={dir === "prev" ? "Previous photo" : "Next photo"}
+              className={`hidden sm:flex absolute ${side} top-1/2 -translate-y-1/2 z-20
+                         w-11 h-11 md:w-12 md:h-12 rounded-full border border-white/15 bg-white/5 backdrop-blur-md
+                         items-center justify-center hover:border-white/35 transition-colors
+                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50`}
+            >
+              <Icon className="w-5 h-5 text-white" aria-hidden="true" />
+            </motion.button>
+          ))}
 
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto pt-2">
-                {selectedPhoto.description}
-              </p>
-
-              {/* Counter */}
-              <div className="pt-3 sm:pt-4 flex items-center justify-center gap-2" aria-live="polite">
-                <div className="h-px w-8 sm:w-12 bg-white/20" aria-hidden="true" />
-                <p className="text-white/40 text-xs tracking-wider">
-                  <span className="sr-only">Photo </span>
-                  {selectedIndex + 1} / {photos.length}
-                </p>
-                <div className="h-px w-8 sm:w-12 bg-white/20" aria-hidden="true" />
+          {/* ── Image ─────────────────────────────────────────────────── */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedIndex}
+              initial={{ opacity: 0, scale: 0.93, y: 24 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.93, y: -16 }}
+              transition={{ duration: 0.55, ease: EASE_EXPO }}
+              className="relative z-10 w-full max-w-[92vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-5xl px-4 sm:px-0 flex flex-col items-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative overflow-hidden rounded-sm shadow-2xl w-full">
+                <Image
+                  src={photo.src}
+                  alt={photo.description}
+                  width={photo.width}
+                  height={photo.height}
+                  quality={90}
+                  priority
+                  className="max-h-[58vh] sm:max-h-[65vh] w-full h-auto object-contain"
+                />
               </div>
-            </motion.div>
 
-            {/* Mobile swipe hint */}
-            <p className="sm:hidden mt-4 text-white/40 text-xs tracking-wider" aria-hidden="true">
-              Swipe to navigate
-            </p>
-          </motion.div>
+              {/* Caption */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.25, ease: EASE_EXPO }}
+                className="mt-6 sm:mt-8 text-center w-full"
+              >
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl tracking-tight text-white">
+                  {photo.title}
+                </h2>
+                <p className="mt-3 text-sm text-white/50 leading-relaxed max-w-xl mx-auto px-4">
+                  {photo.description}
+                </p>
+
+                {/* Dot navigation */}
+                <div
+                  className="mt-6 sm:mt-8 flex items-center justify-center gap-1.5"
+                  aria-label={`Photo ${selectedIndex + 1} of ${photos.length}`}
+                >
+                  {photos.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={(e) => { e.stopPropagation(); setSelectedIndexFromDot(i) }}
+                      aria-label={`Go to photo ${i + 1}`}
+                      aria-current={i === selectedIndex ? "true" : undefined}
+                      className={[
+                        "rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50",
+                        i === selectedIndex ? "w-6 h-1.5 bg-white" : "w-1.5 h-1.5 bg-white/25 hover:bg-white/50",
+                      ].join(" ")}
+                    />
+                  ))}
+                </div>
+
+                {/* Mobile swipe hint */}
+                <p className="sm:hidden mt-4 font-mono text-[9px] tracking-[0.3em] uppercase text-white/25" aria-hidden="true">
+                  Swipe to navigate
+                </p>
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
       )}
     </AnimatePresence>
   )
+
+  // Dot click helper — needs access to the outer setter
+  function setSelectedIndexFromDot(i: number) {
+    // We pass this via the onNavigate pattern; use absolute jump via closure
+    // Since onNavigate only supports prev/next, we loop to the right index
+    if (selectedIndex === null) return
+    const diff = i - selectedIndex
+    const dir = diff > 0 ? "next" : "prev"
+    const steps = Math.abs(diff)
+    for (let s = 0; s < steps; s++) onNavigate(dir)
+  }
 }
 
 export default Gallery

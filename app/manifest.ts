@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
     return {
         name: 'Fresnel Photography',
         short_name: 'Fresnel',
-        description: 'Minimal photography portfolio focused on intentional storytelling.',
+        description: 'Archival photography and cinematic storytelling by Fresnel. Based in Bengaluru, India.',
         start_url: '/',
         display: 'standalone',
         background_color: '#f5f6f4',
