@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Cormorant_Garamond, Lato } from "next/font/google"
+import { Syne, Epilogue } from "next/font/google"
 import SmoothScroll from "@/components/smooth-scroll"
 import Particles from "@/components/particles"
 import BackToTop from "@/components/back-to-top"
@@ -10,26 +10,26 @@ import "./globals.css"
 
 const SITE_URL = "https://fresnel.bhaskar.xyz"
 const SITE_NAME = "Fresnel Photography"
-const SITE_TITLE = "Fresnel | Fine Art Photography Studio in Bengaluru"
+const SITE_TITLE = "Fresnel Photography — Archival Storytelling & Cinematic Visuals"
 const SITE_DESCRIPTION =
-  "Fresnel brings the physics of light to fine art photography. Our Bengaluru studio captures archival-quality portraits through intentional focus and optics."
+  "Fresnel is a premier photography studio by Bhaskar, specializing in archival storytelling, editorial commissions, and cinematic landscapes. Discover intentional photography in Bengaluru, India."
 const OG_IMAGE = "/og-image.png"
 
 // ─── Fonts ────────────────────────────────────────────────────────────────────
 
-const cormorantGaramond = Cormorant_Garamond({
+const syne = Syne({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   preload: true,
 })
 
-const lato = Lato({
+const epilogue = Epilogue({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-  weight: ["300", "400", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   preload: true,
 })
 
@@ -48,20 +48,17 @@ export const metadata: Metadata = {
   keywords: [
     "Fresnel",
     "Fresnel Photography",
-    "Fresnel Studio",
-    "Fresnel Photography Studio",
-    "Professional Photography Bengaluru",
-    "Creative Photography Studio India",
-    "Fine Art Photography",
-    "Optics",
-    "Refraction",
-    "Diffraction",
-    "Wavelength",
-    "Lens",
+    "Bhaskar Fresnel",
+    "Cinematic Storytelling",
     "Archival Photography",
     "Minimalist Photographer Bengaluru",
     "Editorial Photography Portfolio",
+    "Fine Art Photography India",
+    "Bespoke Portraiture",
+    "Contemporary Art Photography",
     "Visual Storyteller India",
+    "Professional Photographer Bengaluru",
+    "Photography Archives",
   ],
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
@@ -77,9 +74,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: "Fresnel | Artistry Meets the Physics of Light",
+    title: SITE_TITLE,
     description:
-      "Experience a distinctive visual collaboration at Fresnel, a Bengaluru-based creative studio specializing in archival fine-art photography.",
+      "Explore the archival photography of Fresnel. A collection of intentional moments, cinematic landscapes, and minimalist storytelling.",
     images: [
       {
         url: OG_IMAGE,
@@ -233,7 +230,7 @@ export default function RootLayout({
     <html
       lang="en"
       dir="ltr"
-      className={`${cormorantGaramond.variable} ${lato.variable}`}
+      className={`${syne.variable} ${epilogue.variable}`}
       suppressHydrationWarning
     >
       <head>

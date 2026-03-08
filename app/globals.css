@@ -8,87 +8,87 @@
    =================================== */
 
 /*
-  Palette concept — "Daguerreotype"
-  ─────────────────────────────────
-  Light mode: warm stone paper (hue 55–65) backgrounds, near-black
-              charcoal ink (hue 45) foreground. Everything on the same
-              warm axis — no blue-grey tension.
-  Dark  mode: deep warm obsidian (hue 45–50) — cinematic, not cold.
-              Gold primary replaces the muted amber.
-  Primary:    rich bronze-gold, readable on both backgrounds.
+  Palette concept — "Platinotype"
+  ────────────────────────────────────────────────────────────────────
+  Named after platinum–palladium printing: the most archivally stable
+  photographic process, prized for its subtle tonal range and warm
+  ivory-to-rich-brown gradation.
+
+  Key departure from the previous "Daguerreotype" palette:
+  ─ Neutrals stay on the warm amber axis (hue 55–72) for continuity.
+  ─ Primary shifts dramatically to bottle green (hue 152–158).
+    Green on warm cream is near-complementary — inherently harmonious
+    and genuinely distinctive. It references the verdigris on old
+    copper lens barrels, the green-felt lining of antique camera
+    cases, and the green-tinted safelights of B&W darkrooms.
+  ─ Both modes have significantly richer chroma (+30–50%) so the
+    palette reads as crafted rather than defaulted.
+
+  Light mode: vellum ivory paper, deep warm ink, bottle-green accent.
+  Dark  mode: deep warm obsidian, rich cream, bright jade accent.
 */
 
 :root {
   color-scheme: light;
 
   /* ── Surfaces ─────────────────────────────────────────────────────── */
-  --background: oklch(0.965 0.008 58);
-  /* warm stone paper       */
-  --foreground: oklch(0.15 0.018 45);
-  /* charcoal ink — warm    */
+  --background: oklch(0.975 0.016 72);
+  /* vellum ivory            */
+  --foreground: oklch(0.12 0.026 40);
+  /* deep warm charcoal ink  */
 
-  --card: oklch(0.975 0.007 58);
-  /* slightly lighter paper */
-  --card-foreground: oklch(0.15 0.018 45);
+  --card: oklch(0.983 0.013 70);
+  /* slightly brighter paper */
+  --card-foreground: oklch(0.12 0.026 40);
 
-  --popover: oklch(0.975 0.007 58);
-  --popover-foreground: oklch(0.15 0.018 45);
+  --popover: oklch(0.983 0.013 70);
+  --popover-foreground: oklch(0.12 0.026 40);
 
-  /* ── Brand ────────────────────────────────────────────────────────── */
-  --primary: oklch(0.42 0.095 48);
-  /* deep bronze            */
-  --primary-foreground: oklch(0.97 0.008 58);
+  /* ── Brand — bottle green ─────────────────────────────────────────── */
+  --primary: oklch(0.36 0.100 155);
+  /* deep bottle green       */
+  --primary-foreground: oklch(0.978 0.010 70);
 
   /* ── Supporting surfaces ──────────────────────────────────────────── */
-  --secondary: oklch(0.925 0.010 58);
-  /* warm light linen       */
-  --secondary-foreground: oklch(0.18 0.018 45);
+  --secondary: oklch(0.938 0.018 68);
+  /* warm linen              */
+  --secondary-foreground: oklch(0.16 0.024 42);
 
-  --muted: oklch(0.925 0.010 58);
-  --muted-foreground: oklch(0.48 0.018 50);
-  /* warm mid-tone          */
+  --muted: oklch(0.938 0.018 68);
+  --muted-foreground: oklch(0.50 0.022 52);
+  /* warm stone mid-tone     */
 
-  --accent: oklch(0.42 0.095 48 / 0.08);
-  --accent-foreground: oklch(0.42 0.095 48);
+  --accent: oklch(0.36 0.100 155 / 0.08);
+  --accent-foreground: oklch(0.36 0.100 155);
 
   /* ── State ────────────────────────────────────────────────────────── */
   --destructive: oklch(0.52 0.22 25);
-  --destructive-foreground: oklch(0.97 0.01 25);
+  --destructive-foreground: oklch(0.975 0.010 68);
 
   /* ── Chrome ───────────────────────────────────────────────────────── */
-  --border: oklch(0.875 0.012 58);
-  /* warm subtle rule       */
-  --input: oklch(0.875 0.012 58);
-  --ring: oklch(0.42 0.095 48);
+  --border: oklch(0.882 0.020 65);
+  /* warm parchment rule     */
+  --input: oklch(0.882 0.020 65);
+  --ring: oklch(0.36 0.100 155);
   --radius: 0rem;
 
-  /* ── Section-specific tokens ─────────────────────────────────────── */
-  /*   About section sits on --background; these give it visual lift    */
-  --about-rule: oklch(0.875 0.012 58);
-  /* divider lines  */
-  --about-ghost: oklch(0.15 0.018 45 / 0.025);
-  /* large numerals */
-  --about-stat: oklch(0.15 0.018 45);
-  /* stat figures   */
-  --about-meta: oklch(0.48 0.018 50);
-  /* caption text   */
+  /* ── About section tokens ─────────────────────────────────────────── */
+  --about-rule: oklch(0.882 0.020 65);
+  --about-ghost: oklch(0.12 0.026 40 / 0.028);
+  /* ghost numerals  */
+  --about-stat: oklch(0.12 0.026 40);
+  --about-meta: oklch(0.50 0.022 52);
 
-  /*   Contact footer is always bg-foreground (dark on dark) —          */
-  /*   these tokens make the dark-surface variants explicit             */
-  --contact-bg: oklch(0.15 0.018 45);
-  /* = foreground           */
-  --contact-surface: oklch(0.20 0.018 45);
-  /* slightly lighter panel */
-  --contact-rule: oklch(1 0 0 / 0.08);
-  /* white rules            */
-  --contact-text: oklch(1 0 0 / 0.75);
-  /* body on dark — increased contrast */
-  --contact-meta: oklch(1 0 0 / 0.45);
-  /* hud / labels — increased contrast  */
-  --contact-ghost: oklch(1 0 0 / 0.03);
-  /* large ghost numeral    */
-  --contact-pill: oklch(1 0 0 / 0.12);
-  /* border pills — increased contrast  */
+  /* ── Contact section tokens (always dark surface) ─────────────────── */
+  --contact-bg: oklch(0.12 0.026 40);
+  /* = foreground            */
+  --contact-surface: oklch(0.18 0.028 42);
+  /* panel card              */
+  --contact-rule: oklch(1 0 0 / 0.09);
+  --contact-text: oklch(1 0 0 / 0.78);
+  --contact-meta: oklch(1 0 0 / 0.48);
+  --contact-ghost: oklch(1 0 0 / 0.032);
+  --contact-pill: oklch(1 0 0 / 0.13);
 
   /* ── Charts ───────────────────────────────────────────────────────── */
   --chart-1: oklch(0.488 0.243 264.376);
@@ -108,63 +108,64 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* ── Shimmer ──────────────────────────────────────────────────────── */
-  --shimmer-highlight: oklch(0.99 0.006 55 / 0.65);
+  --shimmer-highlight: oklch(0.99 0.008 68 / 0.70);
 }
 
 .dark {
   color-scheme: dark;
 
   /* ── Surfaces ─────────────────────────────────────────────────────── */
-  --background: oklch(0.135 0.018 45);
-  /* warm obsidian          */
-  --foreground: oklch(0.945 0.010 60);
-  /* warm off-white         */
+  --background: oklch(0.108 0.028 42);
+  /* deep warm obsidian      */
+  --foreground: oklch(0.955 0.016 72);
+  /* rich warm cream         */
 
-  --card: oklch(0.165 0.018 45);
-  --card-foreground: oklch(0.945 0.010 60);
+  --card: oklch(0.150 0.028 42);
+  --card-foreground: oklch(0.955 0.016 72);
 
-  --popover: oklch(0.165 0.018 45);
-  --popover-foreground: oklch(0.945 0.010 60);
+  --popover: oklch(0.150 0.028 42);
+  --popover-foreground: oklch(0.955 0.016 72);
 
-  /* ── Brand ────────────────────────────────────────────────────────── */
-  --primary: oklch(0.80 0.11 68);
-  /* warm gold              */
-  --primary-foreground: oklch(0.13 0.018 45);
+  /* ── Brand — jade green ───────────────────────────────────────────── */
+  --primary: oklch(0.76 0.148 155);
+  /* bright jade             */
+  --primary-foreground: oklch(0.108 0.028 42);
 
   /* ── Supporting surfaces ──────────────────────────────────────────── */
-  --secondary: oklch(0.215 0.018 45);
-  --secondary-foreground: oklch(0.945 0.010 60);
+  --secondary: oklch(0.198 0.028 42);
+  --secondary-foreground: oklch(0.955 0.016 72);
 
-  --muted: oklch(0.215 0.018 45);
-  --muted-foreground: oklch(0.62 0.018 60);
-  /* warm mid-tone          */
+  --muted: oklch(0.198 0.028 42);
+  --muted-foreground: oklch(0.62 0.022 65);
+  /* warm caramel mid-tone   */
 
-  --accent: oklch(0.80 0.11 68 / 0.12);
-  --accent-foreground: oklch(0.80 0.11 68);
+  --accent: oklch(0.76 0.148 155 / 0.14);
+  --accent-foreground: oklch(0.76 0.148 155);
 
   /* ── State ────────────────────────────────────────────────────────── */
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
 
   /* ── Chrome ───────────────────────────────────────────────────────── */
-  --border: oklch(0.215 0.018 45);
-  --input: oklch(0.215 0.018 45);
-  --ring: oklch(0.80 0.11 68);
+  --border: oklch(0.198 0.028 42);
+  --input: oklch(0.198 0.028 42);
+  --ring: oklch(0.76 0.148 155);
 
-  /* ── Section tokens (dark) ────────────────────────────────────────── */
-  --about-rule: oklch(0.215 0.018 45);
-  --about-ghost: oklch(0.945 0.010 60 / 0.025);
-  --about-stat: oklch(0.945 0.010 60);
-  --about-meta: oklch(0.62 0.018 60);
+  /* ── About section tokens (dark) ──────────────────────────────────── */
+  --about-rule: oklch(0.198 0.028 42);
+  --about-ghost: oklch(0.955 0.016 72 / 0.028);
+  --about-stat: oklch(0.955 0.016 72);
+  --about-meta: oklch(0.62 0.022 65);
 
-  --contact-bg: oklch(0.945 0.010 60);
-  /* inverted in dark mode  */
-  --contact-surface: oklch(0.88 0.010 60);
-  --contact-rule: oklch(0.135 0.018 45 / 0.12);
-  --contact-text: oklch(0.135 0.018 45 / 0.75);
-  --contact-meta: oklch(0.135 0.018 45 / 0.50);
-  --contact-ghost: oklch(0.135 0.018 45 / 0.04);
-  --contact-pill: oklch(0.135 0.018 45 / 0.15);
+  /* ── Contact section tokens (dark — inverts to light bg) ──────────── */
+  --contact-bg: oklch(0.955 0.016 72);
+  /* inverted in dark mode   */
+  --contact-surface: oklch(0.900 0.016 70);
+  --contact-rule: oklch(0.108 0.028 42 / 0.14);
+  --contact-text: oklch(0.108 0.028 42 / 0.72);
+  --contact-meta: oklch(0.108 0.028 42 / 0.45);
+  --contact-ghost: oklch(0.108 0.028 42 / 0.038);
+  --contact-pill: oklch(0.108 0.028 42 / 0.12);
 
   /* ── Charts ───────────────────────────────────────────────────────── */
   --chart-1: oklch(0.488 0.243 264.376);
@@ -183,14 +184,15 @@
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
 
-  --shimmer-highlight: oklch(0.30 0.008 45 / 0.65);
+  --shimmer-highlight: oklch(0.28 0.012 45 / 0.65);
 }
 
 @theme inline {
-  --font-sans: var(--font-sans), ui-sans-serif, system-ui;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: var(--font-serif), ui-serif, Georgia;
   --font-mono: var(--font-mono), ui-monospace, "Courier New";
 
+  /* ── Core colour map ─────────────────────────────────────────────── */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -210,15 +212,21 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* ── Chart colours ───────────────────────────────────────────────── */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  /* ── Radius scale ────────────────────────────────────────────────── */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* ── Sidebar ─────────────────────────────────────────────────────── */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -228,7 +236,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Expose section tokens to Tailwind's utility layer */
+  /* ── Section tokens exposed to Tailwind utilities ────────────────── */
   --color-about-rule: var(--about-rule);
   --color-about-ghost: var(--about-ghost);
   --color-about-stat: var(--about-stat);
@@ -254,9 +262,9 @@
     text-rendering: optimizeLegibility;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
     overflow-x: hidden;
-    /* Warm scroll thumb to match palette */
+    /* Bottle-green thumb matches the new primary */
     scrollbar-width: thin;
-    scrollbar-color: oklch(0.42 0.095 48 / 0.28) oklch(0.925 0.010 58);
+    scrollbar-color: oklch(0.36 0.100 155 / 0.30) oklch(0.938 0.018 68);
   }
 
   body {
@@ -294,35 +302,37 @@
     -webkit-user-drag: none;
   }
 
+  /* WebKit scrollbar — light */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: oklch(0.925 0.010 58);
+    background: oklch(0.938 0.018 68);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: oklch(0.42 0.095 48 / 0.28);
+    background: oklch(0.36 0.100 155 / 0.30);
     border-radius: 100px;
     transition: background-color 0.3s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: oklch(0.42 0.095 48 / 0.50);
+    background: oklch(0.36 0.100 155 / 0.55);
   }
 
+  /* WebKit scrollbar — dark */
   .dark ::-webkit-scrollbar-track {
-    background: oklch(0.165 0.018 45);
+    background: oklch(0.150 0.028 42);
   }
 
   .dark ::-webkit-scrollbar-thumb {
-    background: oklch(0.80 0.11 68 / 0.25);
+    background: oklch(0.76 0.148 155 / 0.28);
   }
 
   .dark ::-webkit-scrollbar-thumb:hover {
-    background: oklch(0.80 0.11 68 / 0.45);
+    background: oklch(0.76 0.148 155 / 0.50);
   }
 }
 
@@ -424,17 +434,16 @@
 }
 
 /* ── Grain ─────────────────────────────────────────────────────────────
-   z-index 100: sits above page content.
-   Lightboxes / modals must use z-index ≥ 101.
-   mix-blend-mode: multiply keeps grain neutral in both themes.
-   ────────────────────────────────────────────────────────────────── */
+   z-index 100: above page content; lightboxes/modals must be ≥ 101.
+   multiply blend keeps grain visually neutral on both warm + cool tones.
+*/
 .grain::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 100;
-  opacity: 0.035;
+  opacity: 0.032;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
   mix-blend-mode: multiply;
 }
@@ -443,35 +452,32 @@
   content: "";
   position: fixed;
   inset: 0;
-  /* Warm vignette instead of neutral black */
-  box-shadow: inset 0 0 200px oklch(0.12 0.02 45 / 0.05);
+  /* Warm-green tinted vignette — subtle reference to the new primary */
+  box-shadow: inset 0 0 220px oklch(0.10 0.03 140 / 0.04);
   pointer-events: none;
   z-index: 99;
 }
 
 /* ── Glass ───────────────────────────────────────────────────────────── */
 .glass {
-  background: oklch(0.965 0.008 58 / 0.82);
+  background: oklch(0.975 0.016 72 / 0.82);
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid oklch(0.875 0.012 58 / 0.6);
+  border: 1px solid oklch(0.882 0.020 65 / 0.6);
 }
 
 .glass-dark {
-  background: oklch(0.15 0.018 45 / 0.82);
+  background: oklch(0.12 0.026 40 / 0.82);
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid oklch(0.28 0.018 45 / 0.35);
+  border: 1px solid oklch(0.28 0.025 48 / 0.35);
 }
 
 /* ===================================
    SECTION HELPERS
    =================================== */
 
-/*
-  About section decorative number.
-  Apply to the large ghost "01" — picks up --about-ghost token.
-*/
+/* Ghost decorative numerals in the About section */
 .about-ghost-numeral {
   color: var(--about-ghost);
   font-family: var(--font-serif);
@@ -481,19 +487,12 @@
   user-select: none;
 }
 
-/*
-  Contact section surface.
-  The contact footer inverts the theme (light: dark bg, dark: light bg).
-  Use .contact-surface on panel cards inside the footer.
-*/
+/* Panel card surface inside the Contact footer */
 .contact-surface {
   background-color: var(--contact-surface);
 }
 
-/*
-  Underline input — used inside the dark contact footer.
-  Plain border-b input that inherits foreground.
-*/
+/* Underline-only input for the Contact footer */
 .contact-input {
   width: 100%;
   background: transparent;
@@ -502,15 +501,14 @@
   padding: 0.625rem 0;
   font-size: 0.875rem;
   color: var(--contact-bg);
-  /* inverted: foreground on dark bg */
   transition: border-color 0.3s ease;
   outline: none;
   resize: none;
 }
 
-/* Swap text color for light-on-dark usage (the actual footer) */
+/* Light-on-dark variant — the actual dark footer */
 .contact-section .contact-input {
-  color: oklch(1 0 0 / 0.90);
+  color: oklch(1 0 0 / 0.92);
   border-bottom-color: var(--contact-rule);
 }
 
@@ -519,7 +517,7 @@
 }
 
 .contact-section .contact-input:focus {
-  border-bottom-color: oklch(1 0 0 / 0.6);
+  border-bottom-color: oklch(1 0 0 / 0.65);
 }
 
 /* ===================================
@@ -580,14 +578,18 @@ a:focus-visible {
    TEXT SELECTION
    =================================== */
 
+/*
+  Bottle-green selection tint — visible against both light and image
+  backgrounds. 20% opacity preserves legibility of selected text.
+*/
 ::selection {
-  background-color: oklch(0.42 0.095 48 / 0.20);
+  background-color: oklch(0.36 0.100 155 / 0.18);
   color: var(--foreground);
   text-shadow: none;
 }
 
 .dark ::selection {
-  background-color: oklch(0.80 0.11 68 / 0.25);
+  background-color: oklch(0.76 0.148 155 / 0.22);
   color: var(--foreground);
 }
 

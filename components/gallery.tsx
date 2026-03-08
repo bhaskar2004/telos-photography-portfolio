@@ -8,101 +8,7 @@ import { X, ZoomIn, ChevronLeft, ChevronRight, ArrowRight, ArrowUpRight } from "
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-interface Photo {
-  id: number
-  src: string
-  title: string
-  category: string
-  description: string
-  width: number
-  height: number
-}
-
-// ─── Data ─────────────────────────────────────────────────────────────────────
-
-const photos: Photo[] = [
-  {
-    id: 1,
-    src: "/photo1.jpg",
-    title: "Misty Highlands",
-    category: "Landscape",
-    description: "Editorial portrait with soft refraction and deep shadows by Fresnel, Bengaluru.",
-    width: 1920,
-    height: 1080,
-  },
-  {
-    id: 2,
-    src: "/photo2.jpg",
-    title: "Urban Skyline",
-    category: "Architecture",
-    description: "Close-up of a lens aperture reflecting the architectural lines of Bengaluru, an archival optics study.",
-    width: 1080,
-    height: 1350,
-  },
-  {
-    id: 3,
-    src: "/photo3.jpg",
-    title: "Golden Hour Lake",
-    category: "Landscape",
-    description: "A fine art photography session utilizing high-contrast diffraction and natural light focus.",
-    width: 1080,
-    height: 1350,
-  },
-  {
-    id: 4,
-    src: "/photo4.jpg",
-    title: "Dusk Silhouette",
-    category: "Editorial",
-    description: "Black and white archival print showing exceptional depth of field and human connection.",
-    width: 1080,
-    height: 1440,
-  },
-  {
-    id: 5,
-    src: "/photo5.jpg",
-    title: "Eternal Rose",
-    category: "Still Life",
-    description: "Cinematic studio setup focusing on the wavelength of golden hour light for an editorial portrait.",
-    width: 1080,
-    height: 1620,
-  },
-  {
-    id: 6,
-    src: "/photo6.jpg",
-    title: "Twilight Branches",
-    category: "Landscape",
-    description: "Stark tree branches silhouetted against fading twilight, a cinematic capture by Fresnel.",
-    width: 1920,
-    height: 1080,
-  },
-  {
-    id: 7,
-    src: "/photo7.jpg",
-    title: "Village Oasis",
-    category: "Documentary",
-    description: "Crystal-clear water gushing into a village pond amid rice fields, documented by Fresnel.",
-    width: 1080,
-    height: 1350,
-  },
-  {
-    id: 9,
-    src: "/photo9.jpg",
-    title: "Nature's Geometry",
-    category: "Macro",
-    description: "Macro study of intricate fern fronds in emerald hues by Fresnel.",
-    width: 1080,
-    height: 1350,
-  },
-  {
-    id: 10,
-    src: "/photo10.jpg",
-    title: "Evergreen Depth",
-    category: "Macro",
-    description: "Abstract close-up of dense evergreen foliage, rich textures captured by Fresnel Photography.",
-    width: 1080,
-    height: 1440,
-  },
-]
+import { type Photo, photos } from "@/lib/data"
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -378,6 +284,7 @@ function GalleryItem({ photo, index, detailed, onClick }: GalleryItemProps) {
       whileHover={{ y: -6, transition: { duration: 0.4, ease: EASE_EXPO } }}
       className="group cursor-pointer relative overflow-hidden bg-muted/20 rounded-sm shadow-md hover:shadow-xl transition-shadow duration-500"
       style={{ aspectRatio }}
+      id={photo.slug}
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

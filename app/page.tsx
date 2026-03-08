@@ -101,12 +101,12 @@ function AboutSection() {
           <Reveal direction="up" duration={1.3}>
             <h2
               id="about-heading"
-              className="font-serif leading-[0.82] tracking-tighter text-foreground"
-              style={{ fontSize: "clamp(3.2rem, 9.5vw, 12rem)" }}
+              className="font-serif leading-[0.9] sm:leading-[0.82] tracking-tighter text-foreground"
+              style={{ fontSize: "clamp(2.5rem, 9.5vw, 12rem)" }}
             >
               The Fresnel Art of<br />
               <em className="not-italic">Intentional</em><br />
-              <span className="italic text-foreground/40">Optics.</span>
+              <span className="italic text-foreground/40">Stillness.</span>
             </h2>
           </Reveal>
         </div>
@@ -119,12 +119,13 @@ function AboutSection() {
           transition={{ duration: 1, delay: 0.15, ease: EASE }}
           className="max-w-[1400px] mx-auto mt-16 sm:mt-20 md:mt-24 border-t border-b border-foreground/8 py-6 sm:py-8"
         >
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-0">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-10 gap-x-6 sm:gap-0">
             {STATS.map((s, i) => (
               <div
                 key={s.label}
                 className={[
-                  "flex flex-col gap-1 sm:px-8",
+                  "flex flex-col gap-1 px-2 sm:px-8",
+                  i % 2 !== 0 ? "border-l border-foreground/8 sm:border-none" : "",
                   i > 0 ? "sm:border-l sm:border-foreground/8" : "",
                 ].join(" ")}
               >
@@ -162,7 +163,7 @@ function AboutSection() {
                 Artist Statement
               </span>
               <blockquote className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.4rem] leading-[1.2] tracking-tight text-foreground/85 italic">
-                "Photography is not about seeing what is there, but acknowledging the soul of the ordinary."
+                “Photography is not about seeing what is there, but acknowledging the soul of the ordinary.”
               </blockquote>
               <div className="mt-8 flex items-center gap-4">
                 <div className="w-8 h-px bg-foreground/20" aria-hidden="true" />
@@ -183,10 +184,14 @@ function AboutSection() {
               className="space-y-6 text-base sm:text-lg text-muted-foreground leading-[1.85]"
             >
               <p>
-                At **Fresnel**, we view photography as a meticulous study of the electromagnetic spectrum. Our studio treats every **aperture** setting and **exposure** choice as a deliberate act of shaping the environment. By embracing the fundamental principles of **refraction**, we transform simple moments into **archival**-quality visual narratives that resonate with a quietly confident, editorial elegance.
+                Based in Bengaluru, India, Fresnel specialises in capturing the quiet details that
+                define our existence. Work spans the intersection of minimalist aesthetics and
+                intentional storytelling — across still imagery and motion media.
               </p>
               <p>
-                Based in the vibrant creative landscape of Bengaluru, the studio serves individuals and art directors seeking a distinctive visual collaborator. We **focus** on the interplay of **wavelength** and shadow, ensuring every frame is balanced with artistic precision. Our philosophy is rooted in the belief that true beauty is **illuminated** through intentional **capture** and a deep understanding of light waves.
+                Whether editorial portraiture or contemporary landscape, the aim is to preserve
+                authenticity. Each frame is a curated story — a reminder to pause, and to truly
+                observe the world around us.
               </p>
             </motion.div>
 
@@ -237,7 +242,7 @@ function AboutSection() {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.9, delay: i * 0.08, ease: EASE }}
                 className={[
-                  "group relative px-0 py-8 sm:py-10",
+                  "group relative px-4 py-8 sm:py-10",
                   "sm:px-8 lg:px-10",
                   i > 0 ? "border-t sm:border-t-0 sm:border-l border-foreground/8" : "",
                 ].join(" ")}
@@ -256,137 +261,6 @@ function AboutSection() {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {p.desc}
                 </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function BrandStorySection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  })
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.95, 1])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1])
-
-  return (
-    <section
-      ref={sectionRef}
-      className="relative py-24 sm:py-32 md:py-40 bg-background overflow-hidden"
-      aria-labelledby="brand-story-heading"
-    >
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 lg:px-24">
-        <motion.div
-          style={{ scale, opacity }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center"
-        >
-          <div className="lg:col-span-12">
-            <motion.span
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: EASE }}
-              className="inline-flex items-center gap-3 text-[9px] sm:text-[10px] tracking-[0.5em] uppercase text-muted-foreground mb-8"
-            >
-              <span className="w-6 h-px bg-muted-foreground/40" />
-              Our Origin
-            </motion.span>
-
-            <h2
-              id="brand-story-heading"
-              className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.85] text-foreground mb-12"
-            >
-              The Name Behind the Lens:<br />
-              <em className="italic text-foreground/40">A Legacy of Light</em>
-            </h2>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-              <div className="space-y-6 text-base sm:text-lg text-muted-foreground leading-[1.85]">
-                <p>
-                  AUGUSTIN-JEAN FRESNEL was the French physicist whose revolutionary work on the wave theory of light and the development of the **Fresnel** lens fundamentally altered our visual world. His invention didn't just **illuminate** lighthouses; it **focused** light into powerful, coherent beams that could penetrate the furthest horizons.
-                </p>
-              </div>
-              <div className="space-y-6 text-base sm:text-lg text-muted-foreground leading-[1.85]">
-                <blockquote className="font-serif italic text-xl sm:text-2xl border-l-2 border-foreground/10 pl-8 mb-8">
-                  "At **Fresnel** photography, we adopt this scientific rigor as our creative metaphor. Photography is more than **capturing** a reflection; it is the art of **diffraction** and **focus**."
-                </blockquote>
-                <p>
-                  We manipulate modern **optics** to bend light around our subjects, creating a **depth of field** that feels both cinematic and intimate. By understanding the physics of the **lens**, our studio in Bengaluru bridges the gap between scientific observation and artistic expression, resulting in timeless, **archival** imagery.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-const FAQS = [
-  {
-    q: "What defines Fresnel photography compared to traditional studios?",
-    a: "Fresnel photography is rooted in the physics of light, emphasizing the same principles of focus and refraction pioneered by Augustin-Jean Fresnel. Our Bengaluru studio combines scientific precision with an editorial, fine art photography aesthetic, producing archival images that favor intentionality and depth over mass-produced digital snapshots."
-  },
-  {
-    q: "Where is the Fresnel studio located, and do you travel?",
-    a: "Our primary creative photography studio India base is located in Bengaluru. While we are deeply integrated into the local creative scene, we frequently collaborate with art directors and clients globally. We are available for destination commissions that require a distinctive, cinematic approach to high-end visual storytelling and fine art photography."
-  },
-  {
-    q: "How can I book a photoshoot with Fresnel?",
-    a: "To book a photoshoot, please visit our contact page or send an inquiry to our team. We recommend booking at least four weeks in advance to allow for a comprehensive pre-production phase where we discuss aperture styles, lighting mood, and the overall creative focus of your session."
-  },
-  {
-    q: "What does \"Fresnel\" mean in the context of your brand?",
-    a: "The name honors Augustin-Jean Fresnel, the physicist who revolutionized modern optics. For us, it represents the technical mastery of light. We use this scientific heritage as a guide, treating every capture as a deliberate act of focusing light waves to create meaningful, archival art."
-  },
-  {
-    q: "Do you offer fine art photography Bengaluru-based sessions for corporate clients?",
-    a: "Yes, we provide professional photography Bengaluru for corporate leaders and creative agencies. We apply our editorial, quietly confident style to executive portraits and brand campaigns, ensuring that every image reflects a high standard of visual excellence and aligns with our philosophy of archival-quality storytelling."
-  }
-]
-
-function FAQSection() {
-  return (
-    <section className="py-24 sm:py-32 md:py-40 bg-background border-t border-foreground/5">
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 lg:px-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-          <div className="lg:col-span-5">
-            <motion.span
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: EASE }}
-              className="inline-flex items-center gap-3 text-[9px] sm:text-[10px] tracking-[0.5em] uppercase text-muted-foreground mb-8"
-            >
-              <span className="w-6 h-px bg-muted-foreground/40" />
-              Information
-            </motion.span>
-            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-tighter leading-[0.95] text-foreground">
-              Frequently Asked<br />Questions
-            </h2>
-          </div>
-          <div className="lg:col-span-7 space-y-12">
-            {FAQS.map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
-                className="group"
-              >
-                <h3 className="font-serif text-xl sm:text-2xl text-foreground mb-4 group-hover:text-foreground/80 transition-colors">
-                  {faq.q}
-                </h3>
-                <p className="text-base text-muted-foreground leading-relaxed">
-                  {faq.a}
-                </p>
-                <div className="mt-8 h-px bg-foreground/5 w-full" />
               </motion.div>
             ))}
           </div>
@@ -492,9 +366,9 @@ function ContactSection() {
             transition={{ duration: 1.1, ease: EASE }}
             onMouseEnter={() => setHoveringEmail(true)}
             onMouseLeave={() => setHoveringEmail(false)}
-            className="block font-serif tracking-tighter leading-[0.85] text-contact-text/[0.95]
-                                   focus-visible:outline-none focus-visible:underline"
-            style={{ fontSize: "clamp(2rem, 5.5vw, 7rem)" }}
+            className="block font-serif tracking-tighter leading-[0.9] sm:leading-[0.85] text-contact-text/[0.95]
+                                   break-all sm:break-normal focus-visible:outline-none focus-visible:underline"
+            style={{ fontSize: "clamp(1.75rem, 5.5vw, 7rem)" }}
             aria-label="Send email to photography.fresnel@gmail.com"
           >
             <motion.span
@@ -585,7 +459,7 @@ function ContactSection() {
             </div>
 
             {/* HUD-style meta */}
-            <div className="hidden sm:grid grid-cols-2 gap-4 border-t border-contact-rule pt-8">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-6 border-t border-contact-rule pt-8 mb-4 lg:mb-0">
               {[
                 { label: "Response", value: "24–48 hrs" },
                 { label: "Format", value: "Still + Motion" },
@@ -702,7 +576,7 @@ function ContactSection() {
                   whileTap={{ scale: 0.98 }}
                   onClick={handleSubmit}
                   disabled={formState === "sending" || !fields.name || !fields.email || !fields.message}
-                  className="self-start inline-flex items-center gap-3
+                  className="w-full sm:w-auto justify-center sm:justify-start inline-flex items-center gap-3
                                                font-mono text-[10px] tracking-[0.4em] uppercase
                                                text-contact-bg bg-contact-text px-7 py-3.5 rounded-full
                                                hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed
@@ -746,17 +620,12 @@ function ContactSection() {
           </span>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-8">
-            <p className="font-mono text-[7px] sm:text-[8px] tracking-[0.3em] uppercase text-contact-meta max-w-xs text-left sm:text-right">
-              The **Fresnel** studio is a fine-art photography destination based in Bengaluru, dedicated to the art and science of light. We specialize in archival imagery and cinematic visual collaborations.
-            </p>
-            <div className="flex flex-col gap-1">
-              <span className="font-mono text-[7px] sm:text-[8px] tracking-[0.35em] uppercase text-contact-meta">
-                VOL. 01 // BLR // MMXXVI
-              </span>
-              <span className="font-mono text-[7px] sm:text-[8px] tracking-[0.3em] uppercase text-contact-meta">
-                © {new Date().getFullYear()} **Fresnel**. All Rights Reserved
-              </span>
-            </div>
+            <span className="font-mono text-[7px] sm:text-[8px] tracking-[0.35em] uppercase text-contact-meta">
+              VOL. 01 // BLR // MMXXVI
+            </span>
+            <span className="font-mono text-[7px] sm:text-[8px] tracking-[0.3em] uppercase text-contact-meta">
+              © {new Date().getFullYear()} All Rights Reserved
+            </span>
           </div>
         </motion.div>
       </div>
@@ -921,7 +790,7 @@ export default function Home() {
             id="hero-title"
             className="font-serif uppercase leading-none tracking-tight text-center text-foreground flex justify-center overflow-hidden"
             style={{ fontSize: "clamp(3.5rem, 15vw, 20rem)" }}
-            aria-label="Fresnel: Bending Light Into Meaningful Stories Through Fine Art Photography"
+            aria-label="Fresnel Photography"
           >
             {["F", "R", "E", "S", "N", "E", "L"].map((char, i) => (
               <motion.span
@@ -963,7 +832,7 @@ export default function Home() {
                           max-w-[28ch] sm:max-w-xs md:max-w-sm
                           leading-relaxed text-center text-foreground/75
                           order-1 sm:order-2 px-2 sm:px-0">
-              An editorial studio in Bengaluru dedicated to the precise capture of human connection and atmospheric optics.
+              Documenting the quiet intentionality of&nbsp;existence through an archival&nbsp;lens.
             </p>
 
             {/* Right CTA */}
@@ -1012,8 +881,6 @@ export default function Home() {
       <Gallery detailed limit={6} />
 
       <AboutSection />
-      <BrandStorySection />
-      <FAQSection />
       <ContactSection />
     </main>
   )
