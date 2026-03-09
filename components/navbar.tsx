@@ -160,7 +160,7 @@ export default function Navbar() {
                         className="flex flex-col focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
                         aria-label="Fresnel — Homepage"
                     >
-                        <span className="font-serif text-xl md:text-2xl tracking-tighter leading-none text-foreground">
+                        <span className="font-serif font-bold text-xl md:text-2xl tracking-[-0.035em] leading-none text-foreground">
                             Fresnel
                         </span>
 

@@ -130,7 +130,7 @@ export function Gallery({ detailed = false, limit }: GalleryProps) {
             <p className="text-[9px] tracking-[0.5em] uppercase text-muted-foreground mb-4">
               Selected Work
             </p>
-            <h2 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.85] text-foreground">
+            <h2 className="font-serif font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.85] text-foreground">
               The Archive
             </h2>
           </div>
@@ -186,7 +186,7 @@ export function Gallery({ detailed = false, limit }: GalleryProps) {
           className="max-w-7xl mx-auto"
           style={{ display: "flex", gap: GAP, alignItems: "flex-start" }}
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             {masonryCols.map((col, colIdx) => (
               <div
                 key={`col-${colIdx}-${columnCount}`}
